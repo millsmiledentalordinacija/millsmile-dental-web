@@ -1,15 +1,6 @@
 ---
-interface Props { title?: string; description?: string; }
-const { title = 'Mill&Smile Dental', description = 'Stomatološka ordinacija Mill&Smile Dental, Ilica 253, Zagreb.' } = Astro.props;
+const {title='Mill&Smile Dental',description='Stomatološka ordinacija Mill&Smile Dental u Zagrebu.',image='/images/recepcija.webp',type='website'}=Astro.props;
+const canonical=new URL(Astro.url.pathname,Astro.site).href;
+const structured={ '@context':'https://schema.org','@type':'Dentist',name:'Mill&Smile Dental',url:'https://info-millsmiledental.com/',image:'https://info-millsmiledental.com/images/recepcija.webp',address:{'@type':'PostalAddress',streetAddress:'Ilica 253',addressLocality:'Zagreb',addressCountry:'HR'},telephone:'+385992411982',email:'ordinacija@info-millsmiledental.com'};
 ---
-<!doctype html>
-<html lang="hr">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content={description} />
-  <title>{title}</title>
-  <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site ?? Astro.url).toString()} />
-</head>
-<body><slot /></body>
-</html>
+<!doctype html><html lang="hr"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>{title}</title><meta name="description" content={description}/><link rel="canonical" href={canonical}/><meta property="og:type" content={type}/><meta property="og:title" content={title}/><meta property="og:description" content={description}/><meta property="og:image" content={new URL(image,Astro.site).href}/><meta property="og:url" content={canonical}/><meta name="robots" content="index,follow"/><link rel="stylesheet" href="/site.css"/><script type="application/ld+json" set:html={JSON.stringify(structured)}/></head><body><slot /></body></html>
