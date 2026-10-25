@@ -1,17 +1,5 @@
 ---
 import Layout from './Layout.astro';
-interface Props { title?: string; description?: string; }
-const { title = 'Mill&Smile Dental', description = 'Stomatološka ordinacija Mill&Smile Dental u Zagrebu.' } = Astro.props;
+const {title,description}=Astro.props;
 ---
-<Layout title={title} description={description}>
-  <main class="page">
-    <a class="back" href="/">← Mill&Smile Dental</a>
-    <slot />
-  </main>
-</Layout>
-<style>
-  :global(body){margin:0;background:#f7faf9;color:#14343b;font-family:system-ui,-apple-system,sans-serif;line-height:1.6}
-  .page{max-width:800px;margin:0 auto;padding:48px 24px}
-  .back{color:#126b6c}
-  :global(a){overflow-wrap:anywhere}
-</style>
+<Layout title={`${title} | Mill&Smile Dental`} description={description}><header class="wrap head"><a href="/"><img src="/images/logo.png" alt="Mill&Smile Dental" style="width:220px;max-width:60vw"/></a><nav style="display:flex;gap:20px;flex-wrap:wrap"><a href="/">Naslovnica</a><details class="dropdown"><summary>Usluge ▾</summary><div class="dropdown-items"><a href="/usluge/protetika/">Protetika</a><a href="/usluge/implantologija/">Implantologija</a><a href="/usluge/estetska-stomatologija/">Estetska stomatologija</a><a href="/usluge/ortodoncija/">Ortodoncija</a><a href="/usluge/preventiva-i-higijena/">Preventiva</a></div></details><a href="/blog/">Blog</a><a href="/#kontakt">Kontakt</a></nav></header><main class="wrap subpage"><slot /></main><footer class="wrap" style="padding:35px 0;border-top:1px solid #dae5e4">Mill&Smile Dental · Ilica 253, Zagreb · <a href="tel:+385992411982">099 241 1982</a></footer></Layout>
