@@ -1,0 +1,17 @@
+---
+import Layout from './Layout.astro';
+interface Props { title?: string; description?: string; }
+const { title = 'Mill&Smile Dental', description = 'Stomatološka ordinacija Mill&Smile Dental u Zagrebu.' } = Astro.props;
+---
+<Layout title={title} description={description}>
+  <main class="page">
+    <a class="back" href="/">← Mill&Smile Dental</a>
+    <slot />
+  </main>
+</Layout>
+<style>
+  :global(body){margin:0;background:#f7faf9;color:#14343b;font-family:system-ui,-apple-system,sans-serif;line-height:1.6}
+  .page{max-width:800px;margin:0 auto;padding:48px 24px}
+  .back{color:#126b6c}
+  :global(a){overflow-wrap:anywhere}
+</style>
