@@ -1,7 +1,7 @@
 name: Astro build check
 on:
   push:
-    branches: [main]
+    branches: [main, 'fix/restore-astro-layouts']
   workflow_dispatch:
 jobs:
   build:
