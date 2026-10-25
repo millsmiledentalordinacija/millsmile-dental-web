@@ -1,0 +1,66 @@
+name: Pre-release website QA
+on:
+  push:
+    branches: ['fix/restore-astro-layouts']
+    paths:
+      - 'src/**'
+      - 'public/**'
+      - 'package.json'
+      - '.github/workflows/site-qa.yml'
+  workflow_dispatch:
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-audit --no-fund
+      - run: npm run build
+      - name: Verify generated pages, internal links, images and page anchors
+        run: |
+          python3 - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          from urllib.parse import urlsplit, unquote
+          from collections import defaultdict
+          class Scan(HTMLParser):
+              def __init__(self):
+                  super().__init__(); self.links=[]; self.ids=set(); self.images=[]
+              def handle_starttag(self,tag,attrs):
+                  a=dict(attrs)
+                  if a.get('id'): self.ids.add(a['id'])
+                  if tag in ('a','link') and a.get('href'): self.links.append(a['href'])
+                  if tag in ('img','script') and a.get('src'): self.images.append(a['src'])
+          root=Path('dist')
+          pages={}
+          for p in root.rglob('*.html'):
+              scan=Scan(); scan.feed(p.read_text(encoding='utf-8')); pages[p]=scan
+          errors=[]
+          def resolve(link,source):
+              u=urlsplit(link)
+              if u.scheme or u.netloc or link.startswith(('mailto:','tel:','data:','javascript:')):return None
+              path=unquote(u.path)
+              if not path: dest=source
+              elif path.startswith('/'): dest=root/path.lstrip('/')
+              else: dest=source.parent/path
+              if dest.is_dir(): dest=dest/'index.html'
+              elif not dest.suffix: dest=dest/'index.html'
+              return dest,u.fragment
+          for page,scan in pages.items():
+              for url in scan.links+scan.images:
+                  target=resolve(url,page)
+                  if not target:continue
+                  dest,fragment=target
+                  if not dest.exists():errors.append(f'{page}: missing {url}')
+                  elif fragment and dest.suffix=='.html':
+                      other=pages.get(dest)
+                      if other and fragment not in other.ids:errors.append(f'{page}: missing anchor {url}')
+          print(f'Checked {len(pages)} HTML pages, {sum(len(x.links)+len(x.images) for x in pages.values())} references')
+          if errors:
+              print('\n'.join(errors));raise SystemExit(1)
+          print('PASS: All local links, images, scripts and anchors resolve')
+          PY
