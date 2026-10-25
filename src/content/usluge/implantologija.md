@@ -1,11 +1,13 @@
 ---
 title: "Implantologija"
-description: "Informacije o dentalnim implantatima i planiranju terapije."
-image: "/images/implantat-rendgen.webp"
+description: "Dentalni implantati i individualno planiranje nadoknade izgubljenih zuba."
+image: "/images/shema-implantologija.svg"
 seo_title: "Implantologija Zagreb | Mill&Smile Dental"
 ---
-Informacije o dentalnim implantatima i planiranju terapije.
+Dentalni implantat nadomješta korijen izgubljenog zuba i može poslužiti kao oslonac za krunicu, most ili drugu protetsku konstrukciju.
 
-Za preporuku odgovarajuće terapije potreban je individualni stomatološki pregled.
+Planiranje uključuje procjenu oralnog zdravlja, raspoložive kosti i mogućnosti protetske nadoknade. Nisu svi pacijenti kandidati za istu vrstu terapije.
 
-**Za informacije i dogovor termina** kontaktirajte ordinaciju na 099 241 1982.
+Cilj je postići stabilno, funkcionalno i estetski usklađeno rješenje prema individualnim potrebama.
+
+**Želite saznati više?** Za informacije i dogovor pregleda kontaktirajte ordinaciju na [099 241 1982](tel:+385992411982).
