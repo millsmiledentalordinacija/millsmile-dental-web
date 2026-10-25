@@ -1,0 +1,7 @@
+---
+import Layout from '../layouts/Layout.astro';
+import home from '../data/home.json';
+import { readFileSync } from 'node:fs';
+const html = readFileSync(new URL('../data/home.html',import.meta.url),'utf8').replaceAll('Osmijeh koji govori za vas.',home.naslov).replaceAll('Stomatološka ordinacija u Zagrebu',home.podnaslov);
+---
+<Layout title={home.seo_naslov} description={home.seo_opis}><div set:html={html}/></Layout>
