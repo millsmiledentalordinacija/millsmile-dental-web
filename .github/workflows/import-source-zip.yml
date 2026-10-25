@@ -1,0 +1,56 @@
+name: Import complete MillSmile source ZIP
+on:
+  push:
+    branches:
+      - fix/restore-astro-layouts
+    paths:
+      - 'project-upload/*.zip'
+  workflow_dispatch:
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/restore-astro-layouts
+      - name: Expand source archive safely
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          from zipfile import ZipFile
+          archives=list(Path('project-upload').glob('*.zip'))
+          if len(archives)!=1:
+              raise SystemExit(f'Expected one ZIP in project-upload, found {len(archives)}')
+          with ZipFile(archives[0]) as z:
+              names=[i.filename for i in z.infolist() if not i.is_dir()]
+              required={'astro.config.mjs','package.json','src/data/home.html','public/site.css','public/images/logo.png'}
+              if not required.issubset(set(names)):
+                  raise SystemExit('Archive does not contain expected project files')
+              for info in z.infolist():
+                  p=Path(info.filename)
+                  if p.is_absolute() or '..' in p.parts:
+                      raise SystemExit('Unsafe ZIP path')
+                  if not info.is_dir() and (p.parts[0]=='.github' or p.parts[0]=='project-upload'):
+                      continue
+                  if info.is_dir():
+                      continue
+                  target=Path.cwd()/p
+                  target.parent.mkdir(parents=True,exist_ok=True)
+                  target.write_bytes(z.read(info))
+          print('Restored',len(names),'source files')
+          PY
+      - name: Commit complete source and original images
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add astro.config.mjs package.json public src .gitignore README.md
+          if ! git diff --cached --quiet; then
+            git commit -m "Restore full original Astro/CMS project from uploaded ZIP"
+            git push origin HEAD:fix/restore-astro-layouts
+          fi
