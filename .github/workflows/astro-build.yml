@@ -1,0 +1,30 @@
+name: Astro build check
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: package.json
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Build site
+        run: npm run build
+      - name: Check generated pages
+        run: |
+          test -f dist/index.html
+          test -f dist/robots.txt
+          test -f dist/sitemap-index.xml
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mills-mile-site-dist
+          path: dist/
