@@ -1,0 +1,15 @@
+---
+interface Props { title?: string; description?: string; }
+const { title = 'Mill&Smile Dental', description = 'Stomatološka ordinacija Mill&Smile Dental, Ilica 253, Zagreb.' } = Astro.props;
+---
+<!doctype html>
+<html lang="hr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content={description} />
+  <title>{title}</title>
+  <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site ?? Astro.url).toString()} />
+</head>
+<body><slot /></body>
+</html>
