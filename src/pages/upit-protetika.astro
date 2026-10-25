@@ -1,0 +1,29 @@
+---
+import Inner from '../layouts/Inner.astro';
+---
+<Inner title="Upit o protetici" description="Pošaljite pitanje o dentalnoj protetici timu Mill&Smile Dental.">
+  <h1>Upitajte nas o protetici</h1>
+  <p class="intro">Imate pitanje o krunicama, mostovima ili drugim protetskim rješenjima? Opišite što vas zanima. Ovo je obrazac za pitanja, a ne rezervacija termina.</p>
+  <p><strong>Naša prednost:</strong> vlastiti dentalni laboratorij nalazi se u sklopu ordinacije, što omogućuje izravnu komunikaciju doktora, laboratorija i pacijenta.</p>
+  <form id="protetika-upit" style="display:grid;gap:1rem;max-width:640px;margin:2rem 0">
+    <label>Ime i prezime <input name="ime" required autocomplete="name" style="display:block;width:100%;padding:.8rem" /></label>
+    <label>E-mail <input name="email" type="email" required autocomplete="email" style="display:block;width:100%;padding:.8rem" /></label>
+    <label>Telefon (neobavezno) <input name="telefon" type="tel" autocomplete="tel" style="display:block;width:100%;padding:.8rem" /></label>
+    <label>Vaše pitanje o protetici <textarea name="pitanje" required rows="6" style="display:block;width:100%;padding:.8rem"></textarea></label>
+    <p>Nemojte unositi osjetljive zdravstvene podatke u ovaj obrazac.</p>
+    <button type="submit" style="padding:1rem;cursor:pointer">Pripremi e-mail upit ↗</button>
+    <p>Gumb otvara vašu aplikaciju za e-mail s pripremljenom porukom. Za slanje je potrebno potvrditi slanje u aplikaciji za e-mail.</p>
+  </form>
+  <script>
+    document.getElementById('protetika-upit')?.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const form = event.currentTarget;
+      if (!(form instanceof HTMLFormElement) || !form.reportValidity()) return;
+      const data = new FormData(form);
+      const value = (key) => String(data.get(key) || '').trim();
+      const subject = encodeURIComponent('Upit o dentalnoj protetici – Mill&Smile Dental');
+      const body = encodeURIComponent('Ime i prezime: ' + value('ime') + '\nE-mail: ' + value('email') + '\nTelefon: ' + value('telefon') + '\n\nPitanje:\n' + value('pitanje'));
+      window.location.href = 'mailto:ordinacija@info-millsmiledental.com?subject=' + subject + '&body=' + body;
+    });
+  </script>
+</Inner>
