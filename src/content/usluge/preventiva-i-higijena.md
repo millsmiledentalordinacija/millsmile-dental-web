@@ -1,11 +1,13 @@
 ---
-title: "Preventiva i higijena"
-description: "Kontrolni pregledi, higijena i savjeti za očuvanje oralnog zdravlja."
-image: "/images/recepcija.webp"
-seo_title: "Preventiva i higijena Zagreb | Mill&Smile Dental"
+title: "Preventiva i oralna higijena"
+description: "Pregledi, profesionalna higijena i savjeti za očuvanje oralnog zdravlja."
+image: "/images/shema-preventiva-i-higijena.svg"
+seo_title: "Preventiva i oralna higijena Zagreb | Mill&Smile Dental"
 ---
-Kontrolni pregledi, higijena i savjeti za očuvanje oralnog zdravlja.
+Redoviti stomatološki pregledi pomažu pravovremenom prepoznavanju karijesa, bolesti zubnog mesa i drugih promjena u usnoj šupljini.
 
-Za preporuku odgovarajuće terapije potreban je individualni stomatološki pregled.
+Profesionalno uklanjanje naslaga i individualne upute za svakodnevnu higijenu pridonose dugoročnom zdravlju zuba i desni.
 
-**Za informacije i dogovor termina** kontaktirajte ordinaciju na 099 241 1982.
+Učestalost kontrola i higijenskih postupaka prilagođava se potrebama svakog pacijenta.
+
+**Želite saznati više?** Za informacije i dogovor pregleda kontaktirajte ordinaciju na [099 241 1982](tel:+385992411982).
