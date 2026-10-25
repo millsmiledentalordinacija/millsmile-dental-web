@@ -1,11 +1,13 @@
 ---
 title: "Dentalna protetika"
 description: "Krunice, mostovi i individualno planiranje protetskih radova."
-image: "/images/rad-protetika.webp"
+image: "/images/shema-protetika.svg"
 seo_title: "Dentalna protetika Zagreb | Mill&Smile Dental"
 ---
-Krunice, mostovi i individualno planiranje protetskih radova.
+Dentalna protetika omogućuje nadoknadu izgubljenih ili oštećenih zuba, s naglaskom na prirodan izgled, funkciju i udobnost.
 
-Za preporuku odgovarajuće terapije potreban je individualni stomatološki pregled.
+Krunice mogu obnoviti oblik i funkciju oštećenog zuba, dok mostovi mogu nadomjestiti jedan ili više zuba kada za to postoje odgovarajući uvjeti.
 
-**Za informacije i dogovor termina** kontaktirajte ordinaciju na 099 241 1982.
+Budući da se dentalni laboratorij nalazi u istom prostoru kao ordinacija, moguće je izravno usklađivati oblik, boju i druge detalje protetskog rada s pacijentom.
+
+**Želite saznati više?** Za informacije i dogovor pregleda kontaktirajte ordinaciju na [099 241 1982](tel:+385992411982).
