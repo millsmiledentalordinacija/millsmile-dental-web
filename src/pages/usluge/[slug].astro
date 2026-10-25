@@ -4,4 +4,14 @@ import {getCollection,render} from 'astro:content';
 export async function getStaticPaths(){return (await getCollection('usluge')).map(item=>({params:{slug:item.id},props:{item}}))}
 const {item}=Astro.props;const {Content}=await render(item);
 ---
-<Inner title={item.data.seo_title} description={item.data.description}><a href="/">Početna</a> / Usluge<h1>{item.data.title}</h1><p class="intro">{item.data.description}</p><img class="feature" src={item.data.image} alt={item.data.title}/><article><Content/></article><p class="legal-note">Informacije su općenite i ne zamjenjuju individualni pregled.</p></Inner>
+<Inner title={item.data.seo_title} description={item.data.description}>
+  <div class="service-breadcrumb"><a href="/">Početna</a> › <a href="/#usluge">Usluge</a> › {item.data.title}</div>
+  <section class="service-hero">
+    <div class="service-copy"><p class="service-eyebrow">MILL&SMILE DENTAL · PODRUČJA STOMATOLOGIJE</p><h1>{item.data.title}</h1><p class="intro">{item.data.description}</p></div>
+  </section>
+  <article class="service-article"><Content/></article>
+  <p class="legal-note">Informacije su općenite i ne zamjenjuju individualni pregled.</p>
+</Inner>
+<style>
+.service-breadcrumb{margin:16px 0 20px;color:#44786c;font-size:14px}.service-breadcrumb a{color:inherit}.service-hero{min-height:260px;display:flex;align-items:center;padding:clamp(28px,5vw,70px);background:radial-gradient(circle at 90% 15%,#cce9df 0,transparent 36%),linear-gradient(125deg,#f6fbf8,#e7f3ed);border-radius:18px;color:#102d43}.service-copy{max-width:740px}.service-eyebrow{font-size:12px;letter-spacing:.16em;font-weight:700;color:#3c9079}.service-hero h1{font-size:clamp(36px,5vw,62px);line-height:1.1;margin:16px 0}.service-hero .intro{font-size:clamp(17px,2vw,22px);line-height:1.6;margin:0}.service-article{max-width:840px;margin:42px auto;font-size:18px;line-height:1.85}.service-article :global(p){margin:0 0 22px}.legal-note{max-width:840px;margin:20px auto 60px}@media(max-width:600px){.service-hero{min-height:230px;padding:28px}.service-article{font-size:16px}}
+</style>
