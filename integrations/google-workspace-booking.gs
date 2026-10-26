@@ -6,16 +6,16 @@
  * Do not paste the secret into source code.
  */
 function doPost(e) {
-  const response = (ok) => ContentService.createTextOutput(JSON.stringify({ok:ok}))
+  const response = (ok,code) => ContentService.createTextOutput(JSON.stringify({ok:ok,code:code||undefined}))
     .setMimeType(ContentService.MimeType.JSON);
   try {
     const body=JSON.parse(e.postData.contents);
     const secret=PropertiesService.getScriptProperties().getProperty('BOOKING_SHARED_SECRET');
-    if(!secret||body.secret!==secret)return response(false);
+    if(!secret||body.secret!==secret)return response(false,'AUTH');
     const value=(key,max)=>String(body[key]||'').trim().slice(0,max);
     const ime=value('ime',120),telefon=value('telefon',40),email=value('email',180),
       usluga=value('usluga',90),datum=value('datum',10),vrijeme=value('vrijeme',10),poruka=value('poruka',600);
-    if(!ime||!/^[-+()\d\s]{6,40}$/.test(telefon)||!/^\d{4}-\d{2}-\d{2}$/.test(datum)||!/^([01]\d|2[0-3]):[03]0$/.test(vrijeme))return response(false);
+    if(!ime||!/^[-+()\d\s]{6,40}$/.test(telefon)||!/^\d{4}-\d{2}-\d{2}$/.test(datum)||!/^([01]\d|2[0-3]):[03]0$/.test(vrijeme))return response(false,'VALIDATION');
     const plain=[
       'Novi upit za termin — Mill&Smile Dental','',
       'Ime i prezime: '+ime,'Telefon: '+telefon,
@@ -32,6 +32,6 @@ function doPost(e) {
     return response(true);
   } catch(err) {
     console.error('Booking script failed: '+err.message);
-    return response(false);
+    return response(false,'MAIL');
   }
 }
