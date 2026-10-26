@@ -3,18 +3,15 @@ import Inner from '../../layouts/Inner.astro';
 import {getCollection,render} from 'astro:content';
 export async function getStaticPaths(){return (await getCollection('usluge')).map(item=>({params:{slug:item.id},props:{item}}))}
 const {item}=Astro.props;const {Content}=await render(item);
-const visuals={protetika:"protetika",implantologija:"implantologija",ortodoncija:"ortodoncija","estetska-stomatologija":"estetska-stomatologija","preventiva-i-higijena":"preventiva"};
-const visual=visuals[item.id];
 ---
 <Inner title={item.data.seo_title} description={item.data.description}>
   <div class="service-breadcrumb"><a href="/">Početna</a> › <a href="/#usluge">Usluge</a> › {item.data.title}</div>
   <section class="service-hero">
     <div class="service-copy"><p class="service-eyebrow">MILL&SMILE DENTAL · PODRUČJA STOMATOLOGIJE</p><h1>{item.data.title}</h1><p class="intro">{item.data.description}</p></div>
-    {visual && <img class="service-visual" src={`/images/odobreno-${visual}.webp`} alt={`Stručni prikaz: ${item.data.title}`} loading="eager" onerror="this.style.display='none'" />}
   </section>
   <article class="service-article"><Content/></article>
   <p class="legal-note">Informacije su općenite i ne zamjenjuju individualni pregled.</p>
 </Inner>
 <style>
-.service-breadcrumb{margin:16px 0 20px;color:#44786c;font-size:14px}.service-breadcrumb a{color:inherit}.service-hero{min-height:260px;display:flex;align-items:center;padding:clamp(28px,5vw,70px);background:radial-gradient(circle at 90% 15%,#cce9df 0,transparent 36%),linear-gradient(125deg,#f6fbf8,#e7f3ed);border-radius:18px;color:#102d43}.service-copy{max-width:55%;position:relative;z-index:1}.service-visual{position:absolute;right:0;top:0;height:100%;width:45%;object-fit:cover;object-position:center;mix-blend-mode:multiply;border-radius:0 18px 18px 0}.service-hero{position:relative;overflow:hidden}.service-eyebrow{font-size:12px;letter-spacing:.16em;font-weight:700;color:#3c9079}.service-hero h1{font-size:clamp(36px,5vw,62px);line-height:1.1;margin:16px 0}.service-hero .intro{font-size:clamp(17px,2vw,22px);line-height:1.6;margin:0}.service-article{max-width:840px;margin:42px auto;font-size:18px;line-height:1.85}.service-article :global(p){margin:0 0 22px}.legal-note{max-width:840px;margin:20px auto 60px}@media(max-width:600px){.service-hero{min-height:230px;padding:28px;display:block}.service-copy{max-width:100%}.service-visual{position:relative;width:100%;height:auto;max-height:280px;border-radius:12px;mix-blend-mode:normal;margin-top:22px}.service-article{font-size:16px}}
+.service-breadcrumb{margin:16px 0 20px;color:#44786c;font-size:14px}.service-breadcrumb a{color:inherit}.service-hero{min-height:260px;display:flex;align-items:center;padding:clamp(28px,5vw,70px);background:radial-gradient(circle at 90% 15%,#cce9df 0,transparent 36%),linear-gradient(125deg,#f6fbf8,#e7f3ed);border-radius:18px;color:#102d43}.service-copy{max-width:850px;position:relative;z-index:1}.service-hero{position:relative;overflow:hidden}.service-eyebrow{font-size:12px;letter-spacing:.16em;font-weight:700;color:#3c9079}.service-hero h1{font-size:clamp(36px,5vw,62px);line-height:1.1;margin:16px 0}.service-hero .intro{font-size:clamp(17px,2vw,22px);line-height:1.6;margin:0}.service-article{max-width:840px;margin:42px auto;font-size:18px;line-height:1.85}.service-article :global(p){margin:0 0 22px}.legal-note{max-width:840px;margin:20px auto 60px}@media(max-width:600px){.service-hero{min-height:230px;padding:28px;display:block}.service-copy{max-width:100%}.service-article{font-size:16px}}
 </style>
