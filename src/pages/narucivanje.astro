@@ -1,4 +1,33 @@
 ---
 import Inner from '../layouts/Inner.astro';
 ---
-<Inner title="Upit za termin" description="Kontakt za dogovor termina u ordinaciji Mill&Smile Dental Zagreb."><h1>Dogovor termina</h1><p class="intro">Za dogovor termina nazovite nas ili nam pošaljite e-mail.</p><p><a href="tel:+385992411982">099 241 1982</a> · <a href="mailto:ordinacija@info-millsmiledental.com">ordinacija@info-millsmiledental.com</a></p><p class="legal-note">Za online upit koristite obrazac za naručivanje. Ne šaljite zdravstvene podatke običnom e-poštom.</p><p><a class="button green" href="https://tally.so/r/kbd5K6">Pošaljite upit za termin ↗</a></p></Inner>
+<Inner title="Upit za termin" description="Pošaljite online upit za termin u ordinaciji Mill&Smile Dental Zagreb.">
+  <div class="booking-breadcrumb"><a href="/">Početna</a> › Naručivanje</div>
+  <section class="booking-hero"><p class="eyebrow">MILL&SMILE DENTAL · ZAGREB</p><h1>Pošaljite upit za termin</h1><p>Odaberite uslugu i napišite kada vam odgovara dolazak. Ordinacija će vam se javiti radi potvrde termina.</p></section>
+  <div class="booking-layout"><form id="booking-form" class="booking-form">
+    <div class="field"><label for="ime">Ime i prezime *</label><input id="ime" name="ime" autocomplete="name" maxlength="120" required /></div>
+    <div class="field"><label for="telefon">Broj telefona *</label><input id="telefon" name="telefon" type="tel" autocomplete="tel" maxlength="40" required /></div>
+    <div class="field"><label for="email">E-mail (neobavezno)</label><input id="email" name="email" type="email" autocomplete="email" maxlength="180" /></div>
+    <div class="field"><label for="usluga">Usluga</label><select id="usluga" name="usluga"><option value="">Odaberite uslugu</option><option>Dentalna protetika</option><option>Dentalni laboratorij</option><option>Implantologija</option><option>Ortodoncija</option><option>Estetska stomatologija</option><option>Preventiva i oralna higijena</option><option>Pregled / konzultacije</option><option>Ostalo</option></select></div>
+    <div class="field full"><label for="vrijeme">Kada vam odgovara termin?</label><input id="vrijeme" name="vrijeme" maxlength="150" placeholder="Npr. radnim danom poslije 16 sati" /></div>
+    <div class="field full"><label for="poruka">Dodatna napomena (neobavezno)</label><textarea id="poruka" name="poruka" rows="4" maxlength="600" placeholder="Bez detaljnih zdravstvenih podataka"></textarea></div>
+    <div class="trap" aria-hidden="true"><label for="website">Ostavite prazno</label><input id="website" name="website" tabindex="-1" autocomplete="off" /></div>
+    <label class="consent full"><input type="checkbox" name="privola" required /><span>Suglasan/na sam da Mill&Smile Dental koristi navedene kontaktne podatke radi odgovora na moj upit za termin. *</span></label>
+    <p class="note full">Slanjem upita termin nije automatski rezerviran. Molimo ne upisujte osjetljive zdravstvene podatke.</p>
+    <div class="full"><button id="submit-booking" type="submit">Pošaljite upit za termin</button><p id="booking-status" role="status" aria-live="polite"></p></div>
+  </form><aside class="booking-aside"><h2>Radije nas nazovite?</h2><p><a href="tel:+385992411982">099 241 1982</a></p><p><a href="mailto:ordinacija@info-millsmiledental.com">ordinacija@info-millsmiledental.com</a></p><p>Mill&Smile Dental<br />Ilica 253, Zagreb</p><p>Termin potvrđuje ordinacija nakon zaprimljenog upita.</p></aside></div>
+</Inner>
+<script>
+const form=document.getElementById('booking-form');
+form?.addEventListener('submit',async(e)=>{
+ e.preventDefault();if(!(form instanceof HTMLFormElement)||!form.reportValidity())return;
+ const button=document.getElementById('submit-booking'),status=document.getElementById('booking-status');
+ if(!(button instanceof HTMLButtonElement)||!status)return;
+ button.disabled=true;status.textContent='Slanje upita…';
+ const data=Object.fromEntries(new FormData(form).entries());data.privola=Boolean(data.privola);
+ try{const response=await fetch('/api/narucivanje',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});const result=await response.json();status.textContent=result.message||'Slanje nije uspjelo.';if(response.ok&&result.ok)form.reset()}catch{status.textContent='Slanje nije uspjelo. Nazovite ordinaciju na 099 241 1982.'}finally{button.disabled=false}
+});
+</script>
+<style>
+.booking-breadcrumb{margin:16px 0 20px;color:#44786c;font-size:14px}.booking-breadcrumb a{color:inherit}.booking-hero{padding:clamp(28px,5vw,70px);background:radial-gradient(circle at 90% 15%,#cce9df 0,transparent 36%),linear-gradient(125deg,#f6fbf8,#e7f3ed);border-radius:18px;color:#102d43}.eyebrow{font-size:12px;letter-spacing:.16em;font-weight:700;color:#3c9079}.booking-hero h1{font-size:clamp(34px,5vw,60px);line-height:1.12;margin:16px 0}.booking-hero p:last-child{font-size:19px;line-height:1.6;max-width:750px}.booking-layout{display:grid;grid-template-columns:minmax(0,2fr) minmax(230px,1fr);gap:35px;margin:40px 0 65px}.booking-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;background:#f6fbf8;border:1px solid #dbeae4;border-radius:18px;padding:clamp(18px,3vw,32px)}.field{display:flex;flex-direction:column;gap:7px}.field label{font-weight:650;color:#173b48}.field input,.field select,.field textarea{width:100%;box-sizing:border-box;border:1px solid #aecbc0;border-radius:9px;background:white;padding:13px;font:inherit;color:#173b48}.field input:focus,.field select:focus,.field textarea:focus{outline:2px solid #4b9b82;outline-offset:2px}.full{grid-column:1/-1}.consent{display:flex;gap:12px;align-items:flex-start;line-height:1.55}.consent input{margin-top:5px;accent-color:#398c78}.note{font-size:14px;color:#526e70;margin:0}.booking-form button{border:0;border-radius:10px;padding:15px 23px;background:#287d68;color:white;font:inherit;font-weight:700;cursor:pointer}.booking-form button:disabled{opacity:.6;cursor:wait}#booking-status{min-height:1.5em;font-weight:600}.booking-aside{padding:22px 0;color:#244653}.booking-aside h2{font-size:23px}.booking-aside a{color:#287d68;overflow-wrap:anywhere}.booking-aside p{line-height:1.65}.trap{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}@media(max-width:750px){.booking-layout{grid-template-columns:1fr}.booking-form{grid-template-columns:1fr}.booking-aside{padding:0 12px}.booking-hero p:last-child{font-size:17px}}
+</style>
