@@ -11,10 +11,22 @@ export async function onRequestPost({request,env}){
   if(!ime||!telefon||!body.privola||!/^[-+()\d\s]{6,40}$/.test(telefon)||email&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)||!/^\d{4}-\d{2}-\d{2}$/.test(datum)||!/^([01]\d|2[0-3]):[03]0$/.test(vrijeme))return respond({ok:false,message:"Provjerite obavezna polja, suglasnost i odabrani termin."},400);
   try{
     const result=await fetch(env.GOOGLE_BOOKING_URL,{method:"POST",redirect:"follow",headers:{"content-type":"text/plain;charset=UTF-8"},body:JSON.stringify({secret:env.GOOGLE_BOOKING_SECRET,ime,telefon,email,usluga,datum,vrijeme,poruka})});
-    if(!result.ok)return respond({ok:false,message:"Upit nije poslan. Molimo nazovite ordinaciju na 099 241 1982."},502);
-    const response=await result.json();
-    if(response.ok!==true)return respond({ok:false,message:"Upit nije poslan. Molimo nazovite ordinaciju na 099 241 1982."},502);
+    if(!result.ok){
+      console.error("Booking upstream HTTP error",result.status,result.url);
+      return respond({ok:false,message:"Google servis nije prihvatio zahtjev (HTTP "+result.status+"). Molimo nazovite ordinaciju na 099 241 1982."},502);
+    }
+    const raw=await result.text();
+    let response;
+    try{response=JSON.parse(raw)}
+    catch{
+      console.error("Booking upstream non-JSON response",result.status,result.url,raw.slice(0,160));
+      return respond({ok:false,message:"Google servis nije vratio ispravan odgovor. Molimo nazovite ordinaciju na 099 241 1982."},502);
+    }
+    if(response.ok!==true){
+      console.error("Booking script rejected request",result.status,result.url);
+      return respond({ok:false,message:"Google skripta odbila je upit. Molimo nazovite ordinaciju na 099 241 1982."},502);
+    }
     return respond({ok:true,message:"Vaš upit je poslan ordinaciji. Termin će biti potvrđen naknadno."});
-  }catch{return respond({ok:false,message:"Upit nije poslan. Molimo nazovite ordinaciju na 099 241 1982."},502)}
+  }catch(error){console.error("Booking upstream fetch failed",String(error));return respond({ok:false,message:"Veza s Google servisom nije uspjela. Molimo nazovite ordinaciju na 099 241 1982."},502)}
 }
 export async function onRequestGet(){return respond({ok:false,message:"Metoda nije podržana."},405)}
