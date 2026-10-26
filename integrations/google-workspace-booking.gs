@@ -15,7 +15,7 @@ function doPost(e) {
     const value=(key,max)=>String(body[key]||'').trim().slice(0,max);
     const ime=value('ime',120),telefon=value('telefon',40),email=value('email',180),
       usluga=value('usluga',90),datum=value('datum',10),vrijeme=value('vrijeme',10),poruka=value('poruka',600);
-    if(!ime||!/^[-+()\\d\\s]{6,40}$/.test(telefon)||!/^\\d{4}-\\d{2}-\\d{2}$/.test(datum)||!/^([01]\\d|2[0-3]):[03]0$/.test(vrijeme))return response(false);
+    if(!ime||!/^[-+()\d\s]{6,40}$/.test(telefon)||!/^\d{4}-\d{2}-\d{2}$/.test(datum)||!/^([01]\d|2[0-3]):[03]0$/.test(vrijeme))return response(false);
     const plain=[
       'Novi upit za termin — Mill&Smile Dental','',
       'Ime i prezime: '+ime,'Telefon: '+telefon,
@@ -25,9 +25,9 @@ function doPost(e) {
       'Željeno vrijeme: '+vrijeme,
       'Napomena: '+(poruka||'Nije navedena'),
       '', 'Termin nije automatski potvrđen.'
-    ].join('\\n');
+    ].join('\n');
     const options={name:'Mill&Smile Dental'};
-    if(email&&/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email))options.replyTo=email;
+    if(email&&/^[^\s@]+@[^\s@]+\\.[^\s@]+$/.test(email))options.replyTo=email;
     MailApp.sendEmail('ordinacija@info-millsmiledental.com','Novi upit za termin — '+ime,plain,options);
     return response(true);
   } catch(err) {
