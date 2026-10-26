@@ -24,7 +24,7 @@ export async function onRequestPost({request,env}){
     }
     if(response.ok!==true){
       console.error("Booking script rejected request",result.status,result.url);
-      return respond({ok:false,message:"Google skripta odbila je upit. Molimo nazovite ordinaciju na 099 241 1982."},502);
+      const reason=({AUTH:"Sigurnosna provjera nije prošla.",VALIDATION:"Google je odbio podatke obrasca.",MAIL:"Google nije uspio poslati e-mail."})[response.code]||"Google skripta odbila je upit."; return respond({ok:false,message:reason+" Molimo nazovite ordinaciju na 099 241 1982."},502);
     }
     return respond({ok:true,message:"Vaš upit je poslan ordinaciji. Termin će biti potvrđen naknadno."});
   }catch(error){console.error("Booking upstream fetch failed",String(error));return respond({ok:false,message:"Veza s Google servisom nije uspjela. Molimo nazovite ordinaciju na 099 241 1982."},502)}
