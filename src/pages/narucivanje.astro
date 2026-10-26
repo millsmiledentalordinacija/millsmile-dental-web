@@ -13,17 +13,25 @@ import Inner from '../layouts/Inner.astro';
     <div class="field"><label for="vrijeme">Željeno vrijeme *</label><select id="vrijeme" name="vrijeme" required><option value="">Odaberite vrijeme</option>{Array.from({length:21},(_,i)=>{const total=8*60+i*30;const label=`${String(Math.floor(total/60)).padStart(2,"0")}:${String(total%60).padStart(2,"0")}`;return <option value={label}>{label}</option>})}</select><small>Odabir ne jamči raspoloživost termina.</small></div>
     <div class="field full"><label for="poruka">Dodatna napomena (neobavezno)</label><textarea id="poruka" name="poruka" rows="4" maxlength="600" placeholder="Bez detaljnih zdravstvenih podataka"></textarea></div>
     <div class="trap" aria-hidden="true"><label for="website">Ostavite prazno</label><input id="website" name="website" tabindex="-1" autocomplete="off" /></div>
-    <label class="consent full"><input type="checkbox" name="privola" required /><span>Suglasan/na sam da Mill&Smile Dental koristi navedene kontaktne podatke radi odgovora na moj upit za termin. *</span></label>
+    <label class="consent full"><input id="privola" type="checkbox" name="privola" required /><span>Suglasan/na sam da Mill&Smile Dental koristi navedene kontaktne podatke radi odgovora na moj upit za termin. *</span></label>
     <p class="note full">Slanjem upita termin nije automatski rezerviran. Molimo ne upisujte osjetljive zdravstvene podatke.</p>
-    <div class="full"><button id="submit-booking" type="submit">Pošaljite upit za termin</button><p id="booking-status" role="status" aria-live="polite"></p></div>
+    <div class="full"><button id="submit-booking" type="submit" disabled>Pošaljite upit za termin</button><p id="booking-status" role="status" aria-live="polite"></p></div>
   </form><aside class="booking-aside"><h2>Radije nas nazovite?</h2><p><a href="tel:+385992411982">099 241 1982</a></p><p><a href="mailto:ordinacija@info-millsmiledental.com">ordinacija@info-millsmiledental.com</a></p><p>Mill&Smile Dental<br />Ilica 253, Zagreb</p><p>Termin potvrđuje ordinacija nakon zaprimljenog upita.</p></aside></div>
 </Inner>
 <script>
 const form=document.getElementById('booking-form');
+const consent=document.getElementById('privola');
+const submitButton=document.getElementById('submit-booking');
+if(consent instanceof HTMLInputElement && submitButton instanceof HTMLButtonElement){
+ const syncConsent=()=>{submitButton.disabled=!consent.checked};
+ consent.addEventListener('change',syncConsent);
+ form?.addEventListener('reset',()=>{submitButton.disabled=true});
+ syncConsent();
+}
 const datum=document.getElementById('datum');
 if(datum instanceof HTMLInputElement){const today=new Intl.DateTimeFormat('sv-SE',{timeZone:'Europe/Zagreb',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());datum.min=today;datum.addEventListener('change',()=>{if(datum.value&&new Date(datum.value+'T12:00:00').getDay()===0){datum.setCustomValidity('Molimo odaberite dan od ponedjeljka do subote.');datum.reportValidity()}else datum.setCustomValidity('')})}
 form?.addEventListener('submit',async(e)=>{
- e.preventDefault();if(!(form instanceof HTMLFormElement)||!form.reportValidity())return;
+ e.preventDefault();if(!(form instanceof HTMLFormElement)||!(consent instanceof HTMLInputElement)||!consent.checked||!form.reportValidity())return;
  const button=document.getElementById('submit-booking'),status=document.getElementById('booking-status');
  if(!(button instanceof HTMLButtonElement)||!status)return;
  button.disabled=true;status.textContent='Slanje upita…';
