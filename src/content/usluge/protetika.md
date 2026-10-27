@@ -29,22 +29,4 @@ Budući da se dentalni laboratorij nalazi u istom prostoru kao ordinacija, mogu�
 
 **4. Predaja i održavanje.** Dobivate upute o higijeni i kontrolnim pregledima, prilagođene vrsti protetskog rada.
 
-## Česta pitanja o dentalnoj protetici
-
-### Koja je razlika između krunice i mosta?
-
-Krunica se najčešće koristi za obnovu pojedinačnog zuba, dok most može nadomjestiti jedan ili više zuba koji nedostaju.
-
-### Koliko traje izrada krunice ili mosta?
-
-Trajanje ovisi o stanju zuba, potrebnim pripremnim zahvatima, vrsti rada i broju proba. Okvirni plan možete dobiti nakon pregleda.
-
-### Kako odabrati boju i oblik novih zuba?
-
-Boja i oblik planiraju se uzimajući u obzir Vaš osmijeh, postojeće zube, zagriz i estetske želje. Dentalni laboratorij u sklopu ordinacije omogućuje izravno usklađivanje detalja.
-
-### Mogu li se protetski radovi postaviti na implantate?
-
-Da, implantati mogu biti oslonac za pojedinačne krunice, mostove i određene vrste nadoknade cijele čeljusti. Više o tome pročitajte na stranici [Implantologija i All-on-X](/usluge/implantologija/).
-
 **Želite saznati koje je rješenje prikladno za Vas?** [Pošaljite upit za pregled](/narucivanje/) ili nas nazovite na [099 241 1982](tel:+385992411982).
