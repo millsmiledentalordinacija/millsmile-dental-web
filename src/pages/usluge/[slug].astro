@@ -5,6 +5,13 @@ export async function getStaticPaths(){return (await getCollection('usluge')).ma
 const {item}=Astro.props;const {Content}=await render(item);
 const isImplantology=item.id==='implantologija';
 const isProsthetics=item.id==='protetika';
+const isAesthetic=item.id==='estetska-stomatologija';
+const aestheticFaq=[
+{q:'Koja je razlika između ljuskica i kompozitnih korekcija?',a:'Ljuskice su tanke nadoknade koje prekrivaju prednju površinu zuba, dok se kompozitne korekcije oblikuju izravno na zubu. Prikladnost ovisi o stanju zuba i željenoj promjeni.'},
+{q:'Može li izbjeljivanje promijeniti boju krunica ili ispuna?',a:'Izbjeljivanje djeluje na prirodne zube, ali ne mijenja boju postojećih krunica, mostova i ispuna na jednak način. Zato je važno unaprijed planirati usklađenost boje.'},
+{q:'Jesu li estetske ljuskice prikladne za svakoga?',a:'Ne nužno. Prije odluke potrebno je procijeniti zdravlje zuba i desni, količinu očuvanog zubnog tkiva i zagriz.'},
+{q:'Koliko dugo traje rezultat estetskog zahvata?',a:'Trajnost ovisi o vrsti postupka, stanju zuba, svakodnevnim navikama, higijeni i redovitim kontrolama. Na pregledu možete dobiti preporuke za održavanje.'}
+];
 const prostheticsFaq=[
 {q:'Koja je razlika između krunice i mosta?',a:'Krunica se najčešće koristi za obnovu pojedinačnog zuba, dok most može nadomjestiti jedan ili više zuba koji nedostaju.'},
 {q:'Koliko traje izrada krunice ili mosta?',a:'Trajanje ovisi o stanju zuba, potrebnim pripremnim zahvatima, vrsti rada i broju proba. Okvirni plan možete dobiti nakon pregleda.'},
@@ -36,6 +43,7 @@ const serviceSchema = { '@context':'https://schema.org', '@type':'Service', name
     <div class="service-copy"><p class="service-eyebrow">MILL&SMILE DENTAL · PODRUČJA STOMATOLOGIJE</p><h1>{item.data.title}</h1><p class="intro">{item.data.description}</p></div>
   </section>
   <article class="service-article"><Content/></article>
+  {isAesthetic && <section class="implant-faq" aria-labelledby="aesthetic-faq-title"><p class="service-eyebrow">ESTETSKA STOMATOLOGIJA · ODGOVORI NA VAŠA PITANJA</p><h2 id="aesthetic-faq-title">Česta pitanja o estetskoj stomatologiji</h2><p class="faq-intro">Saznajte više o ljuskicama, izbjeljivanju i kompozitnim korekcijama.</p><div class="faq-list">{aestheticFaq.map(({q,a})=><details class="faq-item"><summary>{q}<span aria-hidden="true">+</span></summary><p>{a}</p></details>)}</div></section>}
   {isProsthetics && <section class="implant-faq" aria-labelledby="prosthetics-faq-title"><p class="service-eyebrow">PROTETIKA · ODGOVORI NA VAŠA PITANJA</p><h2 id="prosthetics-faq-title">Česta pitanja o dentalnoj protetici</h2><p class="faq-intro">Odgovori o krunicama, mostovima i izradi protetskih radova.</p><div class="faq-list">{prostheticsFaq.map(({q,a})=><details class="faq-item"><summary>{q}<span aria-hidden="true">+</span></summary><p>{a}{q==='Mogu li se protetski radovi postaviti na implantate?' && <> <a href="/usluge/implantologija/">Implantologija i All-on-X</a></>}</p></details>)}</div></section>}
   {isImplantology && <section class="implant-faq" aria-labelledby="implant-faq-title"><p class="service-eyebrow">IMPLANTOLOGIJA · ODGOVORI NA VAŠA PITANJA</p><h2 id="implant-faq-title">Česta pitanja o implantatima i All-on-X rješenjima</h2><p class="faq-intro">Saznajte više o zahvatu, oporavku i mogućnostima fiksnih zuba na implantatima.</p><div class="faq-list">{implantFaq.map(({q,a})=><details class="faq-item"><summary>{q}<span aria-hidden="true">+</span></summary><p>{a}</p></details>)}</div><p class="faq-note">Mogućnosti i trajanje liječenja ovise o individualnom kliničkom nalazu.</p></section>}
   <p class="legal-note">Informacije su općenite i ne zamjenjuju individualni pregled.</p>
