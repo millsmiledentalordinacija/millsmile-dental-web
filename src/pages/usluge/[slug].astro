@@ -12,8 +12,14 @@ const implantFaq=[
 {q:'Što ako nemam dovoljno kosti za implantate?',a:'Nedostatak kosti ne znači nužno da implantološko liječenje nije moguće. Ovisno o nalazu, mogu se razmotriti različiti položaji implantata, nadogradnja kosti ili druge mogućnosti liječenja.'},
 {q:'Koliko traje oporavak nakon All-on-X zahvata?',a:'Početna oteklina i osjetljivost obično se postupno smanjuju tijekom prvih dana. Cijeljenje i povezivanje implantata s kosti traju dulje, a tijekom oporavka važno je pridržavati se uputa i dolaziti na kontrole.'}
 ];
+const faqSchema = { '@context':'https://schema.org', '@type':'FAQPage', mainEntity:implantFaq.map(({q,a})=>({ '@type':'Question', name:q, acceptedAnswer:{ '@type':'Answer', text:a } })) };
+const serviceSchema = { '@context':'https://schema.org', '@type':'Service', name:'Implantologija i All-on-X', serviceType:'Dentalna implantologija', url:'https://info-millsmiledental.com/usluge/implantologija/', provider:{ '@id':'https://info-millsmiledental.com/#ordinacija' }, areaServed:{ '@type':'City', name:'Zagreb' } };
+
 ---
 <Inner title={item.data.seo_title} description={item.data.description}>
+  {isImplantology && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)}/>}
+  {isImplantology && <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)}/>}
+
   <div class="service-breadcrumb"><a href="/">Početna</a> › <a href="/#usluge">Usluge</a> › {item.data.title}</div>
   <section class="service-hero">
     <div class="service-copy"><p class="service-eyebrow">MILL&SMILE DENTAL · PODRUČJA STOMATOLOGIJE</p><h1>{item.data.title}</h1><p class="intro">{item.data.description}</p></div>
