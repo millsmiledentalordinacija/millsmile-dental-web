@@ -5,6 +5,20 @@ export async function getStaticPaths(){return (await getCollection('usluge')).ma
 const {item}=Astro.props;const {Content}=await render(item);
 const isImplantology=item.id==='implantologija';
 const isProsthetics=item.id==='protetika';
+const isOrthodontics=item.id==='ortodoncija';
+const isPrevention=item.id==='preventiva-i-higijena';
+const orthodonticsFaq=[
+{q:'Kada je dobro doći na ortodontski pregled?',a:'Pregled je koristan kada primijetite zbijenost ili razmake među zubima, nepravilnosti zagriza ili druge promjene položaja zuba. Potreba za terapijom procjenjuje se individualno.'},
+{q:'Koliko traje ortodontska terapija?',a:'Trajanje ovisi o vrsti i složenosti nepravilnosti, odabranoj metodi i individualnom odgovoru na terapiju. Okvirno trajanje procjenjuje se nakon dijagnostike.'},
+{q:'Je li ortodontska terapija moguća i u odrasloj dobi?',a:'Da, ortodontska terapija može se razmatrati i kod odraslih osoba. Važno je prethodno procijeniti zdravlje zuba, desni i potpornih tkiva.'},
+{q:'Što se događa nakon završetka ortodontske terapije?',a:'Nakon aktivnog pomicanja zuba obično slijedi faza retencije, koja pomaže očuvati postignuti položaj. Način retencije određuje se individualno.'}
+];
+const preventionFaq=[
+{q:'Koliko često trebam dolaziti na stomatološki pregled?',a:'Učestalost pregleda ovisi o stanju Vaših zuba i desni, prethodnim tegobama i individualnim čimbenicima rizika. Preporuku dobivate nakon pregleda.'},
+{q:'Zašto je potrebno profesionalno uklanjanje zubnog kamenca?',a:'Stvrdnute naslage nije moguće ukloniti običnim četkanjem. Profesionalno čišćenje pomaže održavanju zdravlja zuba i desni.'},
+{q:'Je li krvarenje desni tijekom četkanja normalno?',a:'Krvarenje može biti znak upale ili drugih problema s desnima. Ako se ponavlja, preporučuje se stomatološki pregled.'},
+{q:'Je li profesionalno čišćenje dovoljno bez svakodnevne higijene?',a:'Ne. Profesionalna higijena nadopunjuje redovito četkanje, čišćenje međuzubnih prostora i individualne preporuke za kućnu njegu.'}
+];
 const isAesthetic=item.id==='estetska-stomatologija';
 const aestheticFaq=[
 {q:'Koja je razlika između ljuskica i kompozitnih korekcija?',a:'Ljuskice su tanke nadoknade koje prekrivaju prednju površinu zuba, dok se kompozitne korekcije oblikuju izravno na zubu. Prikladnost ovisi o stanju zuba i željenoj promjeni.'},
@@ -44,6 +58,8 @@ const serviceSchema = { '@context':'https://schema.org', '@type':'Service', name
   </section>
   <article class="service-article"><Content/></article>
   {isAesthetic && <section class="implant-faq" aria-labelledby="aesthetic-faq-title"><p class="service-eyebrow">ESTETSKA STOMATOLOGIJA · ODGOVORI NA VAŠA PITANJA</p><h2 id="aesthetic-faq-title">Česta pitanja o estetskoj stomatologiji</h2><p class="faq-intro">Saznajte više o ljuskicama, izbjeljivanju i kompozitnim korekcijama.</p><div class="faq-list">{aestheticFaq.map(({q,a})=><details class="faq-item"><summary>{q}<span aria-hidden="true">+</span></summary><p>{a}</p></details>)}</div></section>}
+  {isOrthodontics && <section class="implant-faq" aria-labelledby="orthodontics-faq-title"><p class="service-eyebrow">ORTODONCIJA · ODGOVORI NA VAŠA PITANJA</p><h2 id="orthodontics-faq-title">Česta pitanja o ortodonciji</h2><p class="faq-intro">Informacije o pregledu, trajanju terapije i održavanju rezultata.</p><div class="faq-list">{orthodonticsFaq.map(({q,a})=><details class="faq-item"><summary>{q}<span aria-hidden="true">+</span></summary><p>{a}</p></details>)}</div></section>}
+  {isPrevention && <section class="implant-faq" aria-labelledby="prevention-faq-title"><p class="service-eyebrow">PREVENTIVA · ODGOVORI NA VAŠA PITANJA</p><h2 id="prevention-faq-title">Česta pitanja o preventivi i oralnoj higijeni</h2><p class="faq-intro">Odgovori o kontrolama, zubnom kamencu i svakodnevnoj higijeni.</p><div class="faq-list">{preventionFaq.map(({q,a})=><details class="faq-item"><summary>{q}<span aria-hidden="true">+</span></summary><p>{a}</p></details>)}</div></section>}
   {isProsthetics && <section class="implant-faq" aria-labelledby="prosthetics-faq-title"><p class="service-eyebrow">PROTETIKA · ODGOVORI NA VAŠA PITANJA</p><h2 id="prosthetics-faq-title">Česta pitanja o dentalnoj protetici</h2><p class="faq-intro">Odgovori o krunicama, mostovima i izradi protetskih radova.</p><div class="faq-list">{prostheticsFaq.map(({q,a})=><details class="faq-item"><summary>{q}<span aria-hidden="true">+</span></summary><p>{a}{q==='Mogu li se protetski radovi postaviti na implantate?' && <> <a href="/usluge/implantologija/">Implantologija i All-on-X</a></>}</p></details>)}</div></section>}
   {isImplantology && <section class="implant-faq" aria-labelledby="implant-faq-title"><p class="service-eyebrow">IMPLANTOLOGIJA · ODGOVORI NA VAŠA PITANJA</p><h2 id="implant-faq-title">Česta pitanja o implantatima i All-on-X rješenjima</h2><p class="faq-intro">Saznajte više o zahvatu, oporavku i mogućnostima fiksnih zuba na implantatima.</p><div class="faq-list">{implantFaq.map(({q,a})=><details class="faq-item"><summary>{q}<span aria-hidden="true">+</span></summary><p>{a}</p></details>)}</div><p class="faq-note">Mogućnosti i trajanje liječenja ovise o individualnom kliničkom nalazu.</p></section>}
   <p class="legal-note">Informacije su općenite i ne zamjenjuju individualni pregled.</p>
