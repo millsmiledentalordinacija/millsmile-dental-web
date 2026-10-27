@@ -1,13 +1,50 @@
 ---
 title: "Dentalna protetika"
-description: "Krunice, mostovi i individualno planiranje protetskih radova."
+description: "Zubne krunice, mostovi i protetska rješenja uz individualno planiranje i dentalni laboratorij u sklopu ordinacije u Zagrebu."
 image: "/images/shema-protetika.svg"
-seo_title: "Dentalna protetika Zagreb | Mill&Smile Dental"
+seo_title: "Dentalna protetika, krunice i mostovi Zagreb | Mill&Smile Dental"
 ---
-Dentalna protetika omogućuje nadoknadu izgubljenih ili oštećenih zuba, s naglaskom na prirodan izgled, funkciju i udobnost.
 
-Krunice mogu obnoviti oblik i funkciju oštećenog zuba, dok mostovi mogu nadomjestiti jedan ili više zuba kada za to postoje odgovarajući uvjeti.
+## Što je dentalna protetika?
 
-Budući da se dentalni laboratorij nalazi u istom prostoru kao ordinacija, moguće je izravno usklađivati oblik, boju i druge detalje protetskog rada s pacijentom.
+Dentalna protetika omogućuje nadoknadu izgubljenih ili obnovu oštećenih zuba, s naglaskom na prirodan izgled, funkciju i udobnost. Vrsta protetskog rada odabire se prema stanju Vaših zuba, zagrizu i individualnim potrebama.
 
-**Želite saznati više?** Za informacije i dogovor pregleda kontaktirajte ordinaciju na [099 241 1982](tel:+385992411982).
+## Zubne krunice i mostovi
+
+**Zubne krunice** mogu obnoviti oblik, izgled i funkciju zuba koji je znatno oštećen ili oslabljen, kada je takav pristup klinički opravdan.
+
+**Zubni mostovi** mogu nadomjestiti jedan ili više izgubljenih zuba oslanjanjem na odgovarajuće zube nosače ili, u pojedinim slučajevima, na implantate. Odabir ovisi o stanju preostalih zuba i mogućnostima liječenja.
+
+## Dentalni laboratorij u sklopu ordinacije
+
+Budući da se dentalni laboratorij nalazi u istom prostoru kao ordinacija, moguće je izravno usklađivati oblik, boju i druge detalje protetskog rada s Vama. Takva suradnja omogućuje preciznije dogovaranje estetskih i funkcijskih očekivanja, uz individualno planiranje svakog rada.
+
+## Kako izgleda izrada protetskog rada?
+
+**1. Pregled i planiranje.** Procjenjuju se stanje zuba i zagriza te razgovara o Vašim željama i mogućnostima terapije.
+
+**2. Priprema i uzimanje otiska ili digitalnog zapisa.** Postupak ovisi o odabranom protetskom rješenju i kliničkom nalazu.
+
+**3. Izrada i provjera.** Provjeravaju se oblik, boja, pristajanje i funkcija rada te se prema potrebi provode prilagodbe.
+
+**4. Predaja i održavanje.** Dobivate upute o higijeni i kontrolnim pregledima, prilagođene vrsti protetskog rada.
+
+## Česta pitanja o dentalnoj protetici
+
+### Koja je razlika između krunice i mosta?
+
+Krunica se najčešće koristi za obnovu pojedinačnog zuba, dok most može nadomjestiti jedan ili više zuba koji nedostaju.
+
+### Koliko traje izrada krunice ili mosta?
+
+Trajanje ovisi o stanju zuba, potrebnim pripremnim zahvatima, vrsti rada i broju proba. Okvirni plan možete dobiti nakon pregleda.
+
+### Kako odabrati boju i oblik novih zuba?
+
+Boja i oblik planiraju se uzimajući u obzir Vaš osmijeh, postojeće zube, zagriz i estetske želje. Dentalni laboratorij u sklopu ordinacije omogućuje izravno usklađivanje detalja.
+
+### Mogu li se protetski radovi postaviti na implantate?
+
+Da, implantati mogu biti oslonac za pojedinačne krunice, mostove i određene vrste nadoknade cijele čeljusti. Više o tome pročitajte na stranici [Implantologija i All-on-X](/usluge/implantologija/).
+
+**Želite saznati koje je rješenje prikladno za Vas?** [Pošaljite upit za pregled](/narucivanje/) ili nas nazovite na [099 241 1982](tel:+385992411982).
