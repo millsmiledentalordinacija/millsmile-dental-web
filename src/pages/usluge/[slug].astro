@@ -3,6 +3,15 @@ import Inner from '../../layouts/Inner.astro';
 import {getCollection,render} from 'astro:content';
 export async function getStaticPaths(){return (await getCollection('usluge')).map(item=>({params:{slug:item.id},props:{item}}))}
 const {item}=Astro.props;const {Content}=await render(item);
+const isImplantology=item.id==='implantologija';
+const implantFaq=[
+{q:'Koliko je bolna ugradnja zubnog implantata?',a:'Ugradnja implantata najčešće se izvodi u lokalnoj anesteziji, pa tijekom zahvata ne biste trebali osjećati bol. Nakon zahvata mogući su oteklina, osjetljivost i nelagoda, koje se obično postupno smanjuju tijekom nekoliko dana.'},
+{q:'Što su All-on-4 i All-on-X?',a:'All-on-4 je koncept fiksne nadoknade zuba jedne čeljusti na četiri implantata. All-on-X obuhvaća slična rješenja s brojem implantata prilagođenim Vašem kliničkom nalazu, anatomskim uvjetima i planu liječenja.'},
+{q:'Koja je razlika između All-on-4 i All-on-6?',a:'All-on-4 oslanja se na četiri, a All-on-6 na šest implantata. Veći broj implantata nije automatski bolji izbor za svakog pacijenta; odgovarajuće rješenje određuje se nakon pregleda i dijagnostike.'},
+{q:'Koliko brzo nakon ugradnje implantata mogu dobiti fiksne zube?',a:'U određenim slučajevima privremeni fiksni protetski rad moguće je izraditi u relativno kratkom razdoblju nakon ugradnje implantata, ali ne podrazumijeva se izrada istoga dana. Vremenski okvir ovisi o stabilnosti implantata, stanju kosti i individualnom planu liječenja.'},
+{q:'Što ako nemam dovoljno kosti za implantate?',a:'Nedostatak kosti ne znači nužno da implantološko liječenje nije moguće. Ovisno o nalazu, mogu se razmotriti različiti položaji implantata, nadogradnja kosti ili druge mogućnosti liječenja.'},
+{q:'Koliko traje oporavak nakon All-on-X zahvata?',a:'Početna oteklina i osjetljivost obično se postupno smanjuju tijekom prvih dana. Cijeljenje i povezivanje implantata s kosti traju dulje, a tijekom oporavka važno je pridržavati se uputa i dolaziti na kontrole.'}
+];
 ---
 <Inner title={item.data.seo_title} description={item.data.description}>
   <div class="service-breadcrumb"><a href="/">Početna</a> › <a href="/#usluge">Usluge</a> › {item.data.title}</div>
@@ -10,8 +19,10 @@ const {item}=Astro.props;const {Content}=await render(item);
     <div class="service-copy"><p class="service-eyebrow">MILL&SMILE DENTAL · PODRUČJA STOMATOLOGIJE</p><h1>{item.data.title}</h1><p class="intro">{item.data.description}</p></div>
   </section>
   <article class="service-article"><Content/></article>
+  {isImplantology && <section class="implant-faq" aria-labelledby="implant-faq-title"><p class="service-eyebrow">IMPLANTOLOGIJA · ODGOVORI NA VAŠA PITANJA</p><h2 id="implant-faq-title">Česta pitanja o implantatima i All-on-X rješenjima</h2><p class="faq-intro">Saznajte više o zahvatu, oporavku i mogućnostima fiksnih zuba na implantatima.</p><div class="faq-list">{implantFaq.map(({q,a})=><details class="faq-item"><summary>{q}<span aria-hidden="true">+</span></summary><p>{a}</p></details>)}</div><p class="faq-note">Mogućnosti i trajanje liječenja ovise o individualnom kliničkom nalazu.</p></section>}
   <p class="legal-note">Informacije su općenite i ne zamjenjuju individualni pregled.</p>
 </Inner>
 <style>
 .service-breadcrumb{margin:16px 0 20px;color:#44786c;font-size:14px}.service-breadcrumb a{color:inherit}.service-hero{min-height:260px;display:flex;align-items:center;padding:clamp(28px,5vw,70px);background:radial-gradient(circle at 90% 15%,#cce9df 0,transparent 36%),linear-gradient(125deg,#f6fbf8,#e7f3ed);border-radius:18px;color:#102d43}.service-copy{max-width:850px;position:relative;z-index:1}.service-hero{position:relative;overflow:hidden}.service-eyebrow{font-size:12px;letter-spacing:.16em;font-weight:700;color:#3c9079}.service-hero h1{font-size:clamp(36px,5vw,62px);line-height:1.1;margin:16px 0}.service-hero .intro{font-size:clamp(17px,2vw,22px);line-height:1.6;margin:0}.service-article{max-width:840px;margin:42px auto;font-size:18px;line-height:1.85}.service-article :global(p){margin:0 0 22px}.legal-note{max-width:840px;margin:20px auto 60px}@media(max-width:600px){.service-hero{min-height:230px;padding:28px;display:block}.service-copy{max-width:100%}.service-article{font-size:16px}}
+.implant-faq{max-width:840px;margin:45px auto 65px}.implant-faq h2{font-size:clamp(29px,4vw,43px);line-height:1.17;letter-spacing:-.04em;margin:14px 0}.faq-intro{color:#526c6b;line-height:1.75;margin:0 0 26px}.faq-list{border-top:1px solid #d8e6e4}.faq-item{border-bottom:1px solid #d8e6e4}.faq-item summary{display:flex;align-items:center;justify-content:space-between;gap:16px;cursor:pointer;list-style:none;padding:21px 3px;font-weight:700;color:#153d49}.faq-item summary::-webkit-details-marker{display:none}.faq-item summary span{font-size:25px;color:#078e75;font-weight:400;line-height:1}.faq-item[open] summary span{transform:rotate(45deg)}.faq-item p{color:#526c6b;line-height:1.8;margin:0 0 22px;padding-right:25px}.faq-note{font-size:13px;color:#617474;margin-top:18px;line-height:1.6}@media(max-width:600px){.faq-item summary{padding:18px 2px}.implant-faq{margin:35px auto 50px}}
 </style>
