@@ -1,6 +1,29 @@
 ---
-import Inner from '../../layouts/Inner.astro';import {getCollection,render} from 'astro:content';
+import Inner from '../../layouts/Inner.astro';
+import {getCollection,render} from 'astro:content';
 export async function getStaticPaths(){return (await getCollection('blog',({data})=>!data.draft)).map(item=>({params:{slug:item.id},props:{item}}))}
 const {item}=Astro.props;const {Content}=await render(item);
+const text=(item.data.title+' '+item.data.description).toLocaleLowerCase('hr-HR');
+const topics=[
+{words:['implant','all-on','bezub'],name:'Implantologija i All-on-X',url:'/usluge/implantologija/'},
+{words:['protet','krunic','krunic','mostov','most '],name:'Dentalna protetika',url:'/usluge/protetika/'},
+{words:['ljuskic','izbjelj','estetsk','bonding'],name:'Estetska stomatologija',url:'/usluge/estetska-stomatologija/'},
+{words:['ortodon','aparatić','aparatic','zagriz'],name:'Ortodoncija',url:'/usluge/ortodoncija/'},
+{words:['prevent','higijen','kamenac','desni','karijes'],name:'Preventiva i oralna higijena',url:'/usluge/preventiva-i-higijena/'}
+];
+const related=topics.filter(t=>t.words.some(w=>text.includes(w)));
+const articleSchema={'@context':'https://schema.org','@type':'BlogPosting',headline:item.data.title,description:item.data.description,datePublished:item.data.date.toISOString(),mainEntityOfPage:'https://info-millsmiledental.com/blog/'+item.id+'/',publisher:{'@id':'https://info-millsmiledental.com/#ordinacija'},...(item.data.image?{image:new URL(item.data.image,'https://info-millsmiledental.com').href}:{})};
 ---
-<Inner title={item.data.title} description={item.data.description}><a href="/blog/">Blog</a><h1>{item.data.title}</h1><p class="legal-note">{item.data.date.toLocaleDateString('hr-HR')}</p>{item.data.image&&<img class="feature" src={item.data.image} alt=""/>}<article><Content/></article></Inner>
+<Inner title={item.data.title} description={item.data.description}>
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)}/>
+  <a href="/blog/">Blog</a>
+  <h1>{item.data.title}</h1>
+  <p class="legal-note">{item.data.date.toLocaleDateString('hr-HR')}</p>
+  {item.data.image&&<img class="feature" src={item.data.image} alt=""/>}
+  <article><Content/></article>
+  {related.length>0&&<aside class="blog-related" aria-label="Povezane stomatološke usluge"><h2>Povezane usluge</h2><p>Više o mogućnostima liječenja i individualnom planiranju pročitajte na stranicama naših usluga.</p><ul>{related.map(t=><li><a href={t.url}>{t.name}</a></li>)}</ul></aside>}
+  <p class="blog-appointment">Imate pitanje ili želite dogovoriti pregled? <a href="/narucivanje/">Pošaljite upit za termin.</a></p>
+</Inner>
+<style>
+.blog-related{margin:42px 0 25px;padding:24px 28px;background:#f6faf8;border-radius:16px}.blog-related h2{margin:0 0 12px;font-size:24px}.blog-related p{line-height:1.7}.blog-related ul{padding-left:22px}.blog-related li{margin:10px 0}.blog-related a,.blog-appointment a{color:#087d6c;text-underline-offset:4px}.blog-appointment{margin:25px 0 50px;line-height:1.7}
+</style>
