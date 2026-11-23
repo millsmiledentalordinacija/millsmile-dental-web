@@ -2,6 +2,15 @@
 import Layout from '../layouts/Layout.astro';
 import home from '../data/home.json';
 import homepageHtml from '../data/home.html?raw';
-const html = homepageHtml.replaceAll('Osmijeh koji govori za vas.',home.naslov).replaceAll('Stomatološka ordinacija u Zagrebu',home.podnaslov);
+// Glavni naslov dolazi iz home.json (polje "naslov"), kako bi izmjena u CMS-u stvarno promijenila naslovnicu.
+// Raspored redaka ostaje isti: prva riječ / sredina / zadnje dvije riječi istaknute zelenom bojom.
+const esc=(s)=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const words=String(home.naslov||'').trim().split(/\s+/).filter(Boolean);
+const naslovHtml=words.length>=4
+  ? `${esc(words[0])}<br/>${esc(words.slice(1,-2).join(' '))}<br/><em>${esc(words.slice(-2).join(' '))}</em>`
+  : esc(words.join(' '));
+const html = words.length
+  ? homepageHtml.replace(/<h1>[\s\S]*?<\/h1>/,`<h1>${naslovHtml}</h1>`)
+  : homepageHtml;
 ---
 <Layout title={home.seo_naslov} description={home.seo_opis}><div set:html={html}/></Layout>

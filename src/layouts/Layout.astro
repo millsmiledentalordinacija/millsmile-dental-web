@@ -1,4 +1,7 @@
 ---
+// Fontovi se poslužuju s vlastite domene (bez Google Fonts), kako bi DM Sans i Manrope stvarno bili prikazani.
+import '@fontsource-variable/dm-sans';
+import '@fontsource-variable/manrope';
 const {title='Mill&Smile Dental',description='Stomatološka ordinacija Mill&Smile Dental u Zagrebu.',image='/images/recepcija.webp',type='website'}=Astro.props;
 const canonical=new URL(Astro.url.pathname,Astro.site).href;
 const structured={ '@context':'https://schema.org','@type':'Dentist','@id':'https://info-millsmiledental.com/#ordinacija',name:'Mill&Smile Dental',url:'https://info-millsmiledental.com/',image:'https://info-millsmiledental.com/images/recepcija.webp',address:{'@type':'PostalAddress',streetAddress:'Ilica 253',postalCode:'10000',addressLocality:'Zagreb',addressCountry:'HR'},telephone:'+385992411982',email:'ordinacija@info-millsmiledental.com',hasOfferCatalog:{'@type':'OfferCatalog',name:'Stomatološke usluge',itemListElement:[{ '@type':'OfferCatalog',name:'Implantologija i All-on-X',url:'https://info-millsmiledental.com/usluge/implantologija/'},{'@type':'OfferCatalog',name:'Dentalna protetika',url:'https://info-millsmiledental.com/usluge/protetika/'},{'@type':'OfferCatalog',name:'Estetska stomatologija',url:'https://info-millsmiledental.com/usluge/estetska-stomatologija/'},{'@type':'OfferCatalog',name:'Ortodoncija',url:'https://info-millsmiledental.com/usluge/ortodoncija/'},{'@type':'OfferCatalog',name:'Preventiva i higijena',url:'https://info-millsmiledental.com/usluge/preventiva-i-higijena/'}]}};

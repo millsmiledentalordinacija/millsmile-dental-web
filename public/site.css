@@ -32,17 +32,30 @@
 .appointment .kicker{color:#078e75}
 .appointment:after{border-color:#b2ddcd;box-shadow:0 0 0 70px #ffffff45,0 0 0 140px #ffffff30}
 
-/* Galerija stvarnih radova */
-.works{background:#fff}.works-intro{max-width:690px;color:var(--muted);line-height:1.7;margin:0 0 28px}.works-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}.work-card{margin:0;background:#f7f8f5;border:1px solid var(--line);border-radius:20px;overflow:hidden}.work-card img{width:100%;height:320px;object-fit:contain;background:#e9eeea;display:block}.work-card figcaption{padding:16px 20px;font-weight:700}.work-card figcaption small{display:block;margin-top:5px;font-weight:400;color:var(--muted);line-height:1.5}.works-note{font-size:13px;color:var(--muted);margin-top:20px;line-height:1.6}@media(max-width:700px){.works-grid{grid-template-columns:1fr}.work-card img{height:auto;max-height:400px;object-fit:contain}}
 
 
 .photo-showcase{background:#f6faf8}.photo-showcase h2{max-width:750px}.showcase-intro{color:#617474;margin:16px 0 28px}.photo-grid{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:18px}.photo-grid figure{margin:0;overflow:hidden;border-radius:20px;background:white;box-shadow:0 8px 28px rgba(16,52,57,.08)}.photo-grid img{width:100%;height:300px;object-fit:cover;display:block}.photo-grid figure:nth-child(3) img{object-position:center}.photo-grid figcaption{padding:17px 20px;color:#143a42;font-weight:650}.preview-form{max-width:780px;margin:30px auto 0;text-align:left;padding:28px;background:white;border-radius:22px;box-shadow:0 15px 45px rgba(7,40,47,.1);color:#193b42}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:17px}.preview-form label{display:block;font-weight:600;font-size:14px;margin-bottom:16px}.preview-form input,.preview-form select,.preview-form textarea{box-sizing:border-box;width:100%;border:1px solid #d6e3df;border-radius:10px;background:#fbfdfc;padding:14px;margin-top:8px;font:inherit;color:#26464b}.preview-form button:disabled{opacity:.65;cursor:not-allowed}.preview-note{font-size:13px!important;color:#6b7e7e!important;margin:15px 0 0!important}.hero .photo-frame img{object-fit:cover!important;object-position:center!important}@media(max-width:760px){.photo-grid{grid-template-columns:1fr 1fr}.photo-grid .photo-feature{grid-column:1/-1}.photo-grid img{height:220px}.form-grid{grid-template-columns:1fr}.preview-form{padding:18px}.photo-showcase h2{font-size:clamp(30px,8vw,46px)}}
 
-/* Galerija stvarnih radova */
-.works{background:#fff}.works-intro{max-width:690px;color:var(--muted);line-height:1.7;margin:0 0 28px}.works-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}.work-card{margin:0;background:#f7f8f5;border:1px solid var(--line);border-radius:20px;overflow:hidden}.work-card img{width:100%;height:320px;object-fit:contain;background:#e9eeea;display:block}.work-card figcaption{padding:16px 20px;font-weight:700}.work-card figcaption small{display:block;margin-top:5px;font-weight:400;color:var(--muted);line-height:1.5}.works-note{font-size:13px;color:var(--muted);margin-top:20px;line-height:1.6}@media(max-width:700px){.works-grid{grid-template-columns:1fr}.work-card img{height:auto;max-height:400px;object-fit:contain}}
 
 
 /* dodatne stranice */
 .subpage{padding:85px 0 100px;min-height:65vh}.subpage h1{font-size:clamp(2.4rem,5vw,4.5rem);line-height:1.1;margin:16px 0 24px}.subpage p,.subpage li{max-width:72ch;line-height:1.85}.subpage .intro{font-size:1.15rem;color:#45636b}.subgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-top:35px}.subcard{border:1px solid #d8e6e4;border-radius:18px;padding:26px;background:white;text-decoration:none;color:#173443}.subcard:hover{border-color:#49a995}.dropdown{position:relative}.dropdown>summary{cursor:pointer;list-style:none}.dropdown>summary::-webkit-details-marker{display:none}.dropdown-items{position:absolute;z-index:30;top:100%;left:0;min-width:230px;background:white;box-shadow:0 12px 40px #1234;border-radius:14px;padding:12px}.dropdown-items a{display:block;padding:9px 12px;color:#153742;text-decoration:none}.dropdown-items a:hover{background:#eef8f5}.blogimg{width:100%;height:190px;object-fit:cover;border-radius:12px}.subpage img.feature{max-width:100%;border-radius:18px;max-height:420px;object-fit:cover}.legal-note{font-size:.85rem;color:#52636b}.cms-banner{padding:15px;background:#eff8f5;border-radius:12px}
 
 .home-faq{background:#f6faf8}.home-faq-list{max-width:920px;border-top:1px solid #d6e5de}.home-faq-list details{border-bottom:1px solid #d6e5de}.home-faq-list summary{list-style:none;cursor:pointer;padding:23px 4px;display:flex;align-items:center;justify-content:space-between;gap:18px;font-weight:750;color:#153d49;font-size:18px}.home-faq-list summary::-webkit-details-marker{display:none}.home-faq-list summary span{font-size:26px;font-weight:400;color:#078e75;line-height:1}.home-faq-list details[open] summary span{transform:rotate(45deg)}.home-faq-list details p{max-width:780px;margin:0 0 24px;padding:0 28px 0 4px;color:#526c6b;line-height:1.8}.home-faq-more{margin:26px 0 0}.home-faq-more a{color:#078e75;font-weight:750;text-decoration:underline;text-underline-offset:4px}@media(max-width:540px){.home-faq-list summary{font-size:16px;padding:19px 2px}}
+
+/* Ispravci nakon pregleda (studeni 2026) */
+/* Fontovi: učitavaju se iz paketa @fontsource-variable (Layout.astro); lokalni nazivi ostaju kao zamjena. */
+body{font-family:'DM Sans Variable','DM Sans',Arial,sans-serif}
+h1,h2,h3,.floating strong,.step .count,.lab-center{font-family:'Manrope Variable',Manrope,Arial,sans-serif}
+/* Ukrasni okvir uz fotografiju u sekciji "Naš pristup" širio je stranicu na mobitelu. */
+.statement{overflow:hidden}
+/* Naslovi sekcija "Zavirite u Mill&Smile Dental" i "Naši radovi" usklađeni s ostalim naslovima. */
+.photo-showcase h2,.works h2{margin:20px 0 0;font-size:clamp(39px,4vw,62px);line-height:1.13;letter-spacing:-.065em;font-weight:700;max-width:750px}
+.photo-showcase h2 em,.works h2 em{font-style:normal;color:var(--green)}
+.works .works-intro{margin-top:22px}
+@media(max-width:760px){.photo-showcase h2,.works h2{font-size:clamp(32px,8.5vw,46px)}}
+/* Zaglavlje podstranica jednako kao na naslovnici */
+.subpage-main{padding-top:40px}
+/* Na tabletima i manjim prijenosnim računalima navigacija je predugačka i sabija logotip: izbornik ☰ od 1100 px. */
+@media(max-width:1100px){.logo{flex-shrink:0}.links{display:none;position:absolute;top:100%;left:0;right:0;background:#fff;padding:20px 25px 25px;box-shadow:0 15px 22px #082b3a18;flex-direction:column;align-items:stretch;gap:17px}.links.open{display:flex}.menu{display:block}}
+@media(max-width:1100px) and (min-width:761px){.logo{width:220px}}

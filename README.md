@@ -11,7 +11,7 @@ Astro + Pages CMS + Cloudflare Pages. Postojeći vizualni dizajn i stvarne fotog
 
 ## Važno
 
-- Poveznice za online upit vode na Tally obrazac: https://tally.so/r/kbd5K6. Prije objave provjeriti da obrazac radi i kamo stižu upiti.
+- Online upit za termin šalje obrazac na `/narucivanje/` preko Cloudflare Pages Functiona `functions/api/narucivanje.js` i Google Apps Scripta prema ordinacija@info-millsmiledental.com. Te dijelove ne mijenjati bez posebne provjere.
 - Objavljivanje fotografija pacijenata zahtijeva odgovarajuće privole.
 - Blog članak je skica i nije javno objavljen.
 - CMS uređuje blog i usluge, fotografije te dio naslovnice. **Za potpuno vizualno uređivanje svakog dijela naslovnice** treba dodatno prebaciti preostali statički tekst u CMS polja.
