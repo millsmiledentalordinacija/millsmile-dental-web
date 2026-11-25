@@ -59,3 +59,61 @@ h1,h2,h3,.floating strong,.step .count,.lab-center{font-family:'Manrope Variable
 /* Na tabletima i manjim prijenosnim računalima navigacija je predugačka i sabija logotip: izbornik ☰ od 1100 px. */
 @media(max-width:1100px){.logo{flex-shrink:0}.links{display:none;position:absolute;top:100%;left:0;right:0;background:#fff;padding:20px 25px 25px;box-shadow:0 15px 22px #082b3a18;flex-direction:column;align-items:stretch;gap:17px}.links.open{display:flex}.menu{display:block}}
 @media(max-width:1100px) and (min-width:761px){.logo{width:220px}}
+
+/* ===== Dorada naslovnice (studeni 2026) ===== */
+/* Uvod: topliji ton, mirniji naslov, ordinacija i laboratorij odmah vidljivi */
+.hero,.contact{background:#f6f3ee}
+@media(min-width:761px){.hero h1{font-size:clamp(50px,5.6vw,84px);letter-spacing:-.06em}}
+.hero-actions{margin:35px 0 30px}
+.duo{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-width:540px}
+.duo-card{display:flex;flex-direction:column;gap:4px;background:#fff;border:1px solid #e3ebe6;border-radius:14px;padding:17px 19px;transition:border-color .2s,transform .2s}
+.duo-card:hover{border-color:var(--green);transform:translateY(-2px)}
+.duo-card strong{font-family:'Manrope Variable',Manrope,Arial,sans-serif;font-size:16px;letter-spacing:-.02em}
+.duo-card span{font-size:13.5px;line-height:1.5;color:#4f686a}
+.duo-lab{background:var(--mint);border-color:#c8e3d8}
+.duo-lab span{color:#2f5355}
+a.floating{color:inherit}
+.floating strong{font-size:18px;letter-spacing:-.03em}
+@media(max-width:400px){.duo{grid-template-columns:1fr}}
+
+/* Laboratorij: stvarne fotografije umjesto grafike s logotipom */
+.lab-photos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.lab-photo{margin:0;border-radius:16px;overflow:hidden;background:#fff;border:1px solid #d6e8df}
+.lab-photo img{display:block;width:100%;height:230px;object-fit:cover}
+.lab-photo-main{grid-column:1/-1}
+.lab-photo-main img{height:300px}
+.lab-photo figcaption{padding:12px 15px 14px;font-size:13.5px;line-height:1.45;color:#35585a}
+.lab-photo figcaption span{display:block;margin-bottom:3px;font-size:10.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#067a65}
+.lab-photo-empty{height:230px;display:grid;place-items:center;text-align:center;background:#eef6f2;color:#35585a;font-weight:700;font-size:14px;line-height:1.5;padding:16px}
+.lab-photo-empty small{font-weight:400}
+@media(max-width:540px){.lab-photos{grid-template-columns:1fr}.lab-photo img,.lab-photo-main img,.lab-photo-empty{height:220px}}
+
+/* Naš tim */
+.team{background:#fff}
+.team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:18px}
+.team-card{background:#f7f8f5;border:1px solid var(--line);border-radius:18px;padding:20px}
+.team-photo{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:12px;margin-bottom:18px}
+.team-initials{display:grid;place-items:center;aspect-ratio:4/3;background:#e7f3ed;color:#078e75;font-family:'Manrope Variable',Manrope,Arial,sans-serif;font-size:42px;font-weight:700}
+.team-card h3{font-size:20px;letter-spacing:-.03em;margin:0 0 4px}
+.team-role{color:#067a65;font-weight:700;font-size:13px;margin:0 0 10px}
+.team-card p{font-size:14px;line-height:1.7;color:var(--muted);margin:0}
+.team-card .team-role{color:#067a65}
+
+/* Galerija: bez sivih rubova; široke fotografije preko cijele širine */
+.works-grid{align-items:start}
+.work-card{background:#fff}
+.work-card img{height:auto;aspect-ratio:16/10;object-fit:cover;background:none}
+.work-wide{grid-column:1/-1}
+.work-wide img{aspect-ratio:auto}
+@media(max-width:700px){.work-card img{max-height:none;object-fit:cover}.work-wide img{aspect-ratio:auto}}
+
+/* Kontakt: karta i radno vrijeme */
+.map-link{display:inline-block;margin-top:6px;color:#067a65;font-weight:700;font-size:14px;text-decoration:underline;text-underline-offset:4px}
+.hours-row{display:flex;justify-content:space-between;gap:24px;max-width:330px}
+
+/* Oznake koje postoje samo u pregledu dizajnerske grane (ne prikazuju se na produkciji) */
+.placeholder-note{display:block;margin-top:6px;font-size:12px;line-height:1.4;color:#a14a12;font-weight:700}
+.is-placeholder{outline:2px dashed #e0a36f;outline-offset:3px}
+.team h2 em{font-style:normal;color:var(--green)}
+.lab-photo figcaption .placeholder-note{display:block;margin-top:4px;font-size:12px;letter-spacing:0;text-transform:none;color:#a14a12}
+.work-wide img{max-height:360px;object-fit:cover}
