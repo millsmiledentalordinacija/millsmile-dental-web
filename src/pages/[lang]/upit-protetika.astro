@@ -1,0 +1,33 @@
+---
+import Inner from '../../layouts/Inner.astro';
+import {OTHER_LANGS,localPath} from '../../lib/i18n.mjs';
+import {T,SERVICE_OPTIONS} from '../../i18n/pages.mjs';
+export function getStaticPaths(){return OTHER_LANGS.map(lang=>({params:{lang}}))}
+const {lang}=Astro.params;const c=T[lang].common;
+const t=T[lang].inquiry;
+---
+<Inner title={t.title} description={t.desc}>
+  <h1>{t.h1}</h1>
+  <p class="intro">{t.intro}</p>
+  <p><strong>{t.advL}</strong> {t.adv}</p>
+  <form id="protetika-upit" style="display:grid;gap:1rem;max-width:640px;margin:2rem 0" data-lang={lang.toUpperCase()} data-name={t.name} data-email={t.email} data-phone={t.phone} data-question={t.question}>
+    <label>{t.name} <input name="ime" required autocomplete="name" style="display:block;width:100%;padding:.8rem" /></label>
+    <label>{t.email} <input name="email" type="email" required autocomplete="email" style="display:block;width:100%;padding:.8rem" /></label>
+    <label>{t.phone} <input name="telefon" type="tel" autocomplete="tel" style="display:block;width:100%;padding:.8rem" /></label>
+    <label>{t.q} <textarea name="pitanje" required rows="6" style="display:block;width:100%;padding:.8rem"></textarea></label>
+    <p>{t.warn}</p>
+    <button type="submit" style="padding:1rem;cursor:pointer">{t.submit}</button>
+    <p>{t.hint}</p>
+  </form>
+  <script is:inline>
+    document.getElementById('protetika-upit')?.addEventListener('submit',(event)=>{
+      event.preventDefault();
+      const form=event.currentTarget;if(!form.reportValidity())return;
+      const data=new FormData(form),t=form.dataset;
+      const value=(key)=>String(data.get(key)||'').trim();
+      const subject=encodeURIComponent('Upit o dentalnoj protetici – Mill&Smile Dental ('+t.lang+')');
+      const body=encodeURIComponent(t.name+': '+value('ime')+'\n'+t.email+': '+value('email')+'\n'+t.phone+': '+value('telefon')+'\n\n'+t.question+':\n'+value('pitanje'));
+      window.location.href='mailto:ordinacija@info-millsmiledental.com?subject='+subject+'&body='+body;
+    });
+  </script>
+</Inner>

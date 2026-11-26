@@ -1,0 +1,46 @@
+// Sastavljanje naslovnice za sve jezike. Hrvatski tekst je u src/data/home.html,
+// prijevodi u src/i18n/home.<jezik>.json (ključ = hrvatski tekst).
+import {esc,translateHtml,langSwitcher} from './i18n.mjs';
+
+export function buildHome({html:source,home,lang='hr',dict=null,branch=''}){
+  // Mjesta za tim, radno vrijeme i fotografije laboratorija prikazuju se SAMO u Cloudflare pregledu
+  // dizajnerskih grana (design/...). Na produkciji se prazna polja jednostavno ne prikazuju.
+  const showPlaceholders=String(branch).startsWith('design/');
+  const ph=(text)=>showPlaceholders?`<span class="placeholder-note">${esc(text)}</span>`:'';
+
+  // Glavni naslov iz home.json (samo hrvatski): prva riječ / sredina / zadnje dvije riječi istaknute.
+  const words=String(home.naslov||'').trim().split(/\s+/).filter(Boolean);
+  const naslovHtml=words.length>=4
+    ? `${esc(words[0])}<br/>${esc(words.slice(1,-2).join(' '))}<br/><em>${esc(words.slice(-2).join(' '))}</em>`
+    : esc(words.join(' '));
+
+  // Naš tim (home.json → "tim": [{ "ime", "uloga", "opis", "fotografija" }])
+  const tim=Array.isArray(home.tim)?home.tim.filter(c=>c&&c.ime):[];
+  const initials=(ime)=>String(ime).split(/\s+/).filter(w=>!/^(dr|med|dent|mr|sc)\.?$/i.test(w.replace(/[.,]/g,''))).slice(0,2).map(w=>w[0]).join('').toUpperCase();
+  const timCards=tim.length
+    ? tim.map(c=>`<article class="team-card">${c.fotografija?`<img class="team-photo" src="${esc(c.fotografija)}" alt="${esc(c.ime)}" loading="lazy"/>`:`<div class="team-photo team-initials" aria-hidden="true">${esc(initials(c.ime))}</div>`}<h3>${esc(c.ime)}</h3>${c.uloga?`<p class="team-role">${esc(c.uloga)}</p>`:''}${c.opis?`<p>${esc(c.opis)}</p>`:''}</article>`).join('')
+    : (showPlaceholders?['Doktor dentalne medicine','Dentalni tehničar','Član tima'].map(r=>`<article class="team-card is-placeholder"><div class="team-photo team-initials" aria-hidden="true">?</div><h3>Ime i prezime</h3><p class="team-role">${r}</p><p>Fotografija, titula i kratki opis. Upisuje se u home.json → „tim”.</p></article>`).join(''):'');
+  const timSection=timCards
+    ? `<section class="section team" id="tim"><div class="wrap"><div class="section-head"><div><div class="kicker">Naš tim</div><h2>Ljudi iza<br/><em>Vašeg osmijeha.</em></h2></div><p>Ordinacija i dentalni laboratorij rade kao jedan tim, u istom prostoru.${tim.length?'':ph('Mjesto za tim — vidljivo samo u pregledu.')}</p></div><div class="team-grid">${timCards}</div></div></section>`
+    : '';
+
+  // Fotografije laboratorija (home.json → "laboratorij_fotografije": [{ "src", "alt", "opis" }])
+  const labFoto=Array.isArray(home.laboratorij_fotografije)?home.laboratorij_fotografije.filter(f=>f&&f.src):[];
+  const labFotoHtml=labFoto.length
+    ? labFoto.map(f=>`<figure class="lab-photo"><img alt="${esc(f.alt||f.opis||'Dentalni laboratorij Mill&Smile Dental')}" loading="lazy" src="${esc(f.src)}"/><figcaption><span>Laboratorij</span>${esc(f.opis||'')}</figcaption></figure>`).join('')
+    : (showPlaceholders?`<figure class="lab-photo is-placeholder"><div class="lab-photo-empty">Fotografija laboratorija<br/><small>tehničar pri radu ili radni stol</small></div><figcaption><span>Laboratorij</span>${ph('Mjesto vidljivo samo u pregledu.')}</figcaption></figure>`:'');
+
+  // Radno vrijeme (home.json → "radno_vrijeme": [{ "dani", "vrijeme" }])
+  const rv=Array.isArray(home.radno_vrijeme)?home.radno_vrijeme.filter(r=>r&&r.dani):[];
+  const rvHtml=rv.length
+    ? `<div class="contact-row"><label>Radno vrijeme</label><div>${rv.map(r=>`<span class="hours-row"><span>${esc(r.dani)}</span><span>${esc(r.vrijeme||'')}</span></span>`).join('')}</div></div>`
+    : (showPlaceholders?`<div class="contact-row is-placeholder"><label>Radno vrijeme</label><div><span class="hours-row"><span>Ponedjeljak – petak</span><span>__:__ – __:__</span></span><span class="hours-row"><span>Subota</span><span>__:__ – __:__</span></span>${ph('Upisuje se u home.json → „radno_vrijeme”. Vidljivo samo u pregledu.')}</div></div>`:'');
+
+  let html=source;
+  if(lang==='hr'&&words.length)html=html.replace(/<h1>[\s\S]*?<\/h1>/,`<h1>${naslovHtml}</h1>`);
+  html=html.replace('<!--TIM-->',timSection).replace('<!--LAB-FOTO-->',labFotoHtml).replace('<!--RADNO-VRIJEME-->',rvHtml);
+  let missing=[];
+  if(lang!=='hr'&&dict){const r=translateHtml(html,dict,lang);html=r.html;missing=r.missing}
+  html=html.replace('<!--LANG-->',langSwitcher(lang,'/'));
+  return {html,missing};
+}

@@ -1,10 +1,21 @@
 ---
 import Layout from './Layout.astro';
-const {title,description}=Astro.props;
+import {splitPath,translateHtml,langSwitcher} from '../lib/i18n.mjs';
+import en from '../i18n/home.en.json';
+import de from '../i18n/home.de.json';
+import it from '../i18n/home.it.json';
+import sl from '../i18n/home.sl.json';
+const {title,description,alternates=true}=Astro.props;
+const {lang,base}=splitPath(Astro.url.pathname);
+// Zaglavlje i podnožje pišu se na hrvatskom; za ostale jezike prevode se istim rječnikom kao naslovnica.
+let header=`<header class="header"><nav aria-label="Glavna navigacija" class="wrap head"><a aria-label="Mill&amp;Smile Dental — početna" href="/"><img alt="Mill&amp;Smile Dental — originalni logotip" class="logo" width="565" height="175" src="/images/logo.png"/></a><button aria-controls="nav-links" aria-expanded="false" aria-label="Otvori izbornik" class="menu" type="button">☰</button><div class="links" id="nav-links"><a href="/#ordinacija">Ordinacija</a><details class="dropdown"><summary>Usluge ▾</summary><div class="dropdown-items"><a href="/usluge/protetika/">Dentalna protetika</a><a href="/usluge/implantologija/">Implantologija</a><a href="/usluge/estetska-stomatologija/">Estetska stomatologija</a><a href="/usluge/ortodoncija/">Ortodoncija</a><a href="/usluge/preventiva-i-higijena/">Preventiva i higijena</a></div></details><a href="/laboratorij/">Dentalni laboratorij</a><a href="/#radovi">Naši radovi</a><a href="/#pristup">Naš pristup</a><a href="/blog/">Blog</a><a href="/#kontakt">Kontakt</a><a class="button" href="/narucivanje/">Naručite se</a></div><!--LANG--></nav></header>`;
+let footer=`<footer class="footer"><div class="wrap footer-inner"><img alt="Mill&amp;Smile Dental — originalni logotip" loading="lazy" src="/images/logo.png"/><small>Mill&amp;Smile Dental · Ilica 253, 10000 Zagreb · <a href="tel:+385992411982">099 241 1982</a> · <a href="mailto:ordinacija@info-millsmiledental.com">ordinacija@info-millsmiledental.com</a></small></div></footer>`;
+if(lang!=='hr'){const dict={en,de,it,sl}[lang];header=translateHtml(header,dict,lang).html;footer=translateHtml(footer,dict,lang).html}
+header=header.replace('<!--LANG-->',alternates?langSwitcher(lang,base):'');
 ---
-<Layout title={`${title} | Mill&Smile Dental`} description={description}>
-<header class="header"><nav aria-label="Glavna navigacija" class="wrap head"><a aria-label="Mill&Smile Dental — početna" href="/"><img alt="Mill&Smile Dental — originalni logotip" class="logo" width="565" height="175" src="/images/logo.png"/></a><button aria-controls="nav-links" aria-expanded="false" aria-label="Otvori izbornik" class="menu" type="button">☰</button><div class="links" id="nav-links"><a href="/#ordinacija">Ordinacija</a><details class="dropdown"><summary>Usluge ▾</summary><div class="dropdown-items"><a href="/usluge/protetika/">Dentalna protetika</a><a href="/usluge/implantologija/">Implantologija</a><a href="/usluge/estetska-stomatologija/">Estetska stomatologija</a><a href="/usluge/ortodoncija/">Ortodoncija</a><a href="/usluge/preventiva-i-higijena/">Preventiva i higijena</a></div></details><a href="/laboratorij/">Dentalni laboratorij</a><a href="/#radovi">Naši radovi</a><a href="/#pristup">Naš pristup</a><a href="/blog/">Blog</a><a href="/#kontakt">Kontakt</a><a class="button" href="/narucivanje/">Naručite se</a></div></nav></header>
+<Layout title={`${title} | Mill&Smile Dental`} description={description} alternates={alternates}>
+<Fragment set:html={header}/>
 <main class="wrap subpage subpage-main"><slot /></main>
-<footer class="footer"><div class="wrap footer-inner"><img alt="Mill&Smile Dental — originalni logotip" loading="lazy" src="/images/logo.png"/><small>Mill&Smile Dental · Ilica 253, 10000 Zagreb · <a href="tel:+385992411982">099 241 1982</a> · <a href="mailto:ordinacija@info-millsmiledental.com">ordinacija@info-millsmiledental.com</a></small></div></footer>
+<Fragment set:html={footer}/>
 <script is:inline>const m=document.querySelector('.menu'),l=document.querySelector('.links');if(m&&l){m.addEventListener('click',()=>{const open=l.classList.toggle('open');m.setAttribute('aria-expanded',String(open));m.textContent=open?'✕':'☰'});l.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{l.classList.remove('open');m.setAttribute('aria-expanded','false');m.textContent='☰'}))}</script>
 </Layout>

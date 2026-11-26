@@ -1,0 +1,33 @@
+---
+import Inner from '../../layouts/Inner.astro';
+import {OTHER_LANGS,localPath} from '../../lib/i18n.mjs';
+import {T,SERVICE_OPTIONS} from '../../i18n/pages.mjs';
+export function getStaticPaths(){return OTHER_LANGS.map(lang=>({params:{lang}}))}
+const {lang}=Astro.params;const c=T[lang].common;
+const t=T[lang].lab;
+---
+<Inner title={t.title} description={t.desc}>
+  <div class="service-breadcrumb"><a href={localPath(lang,'/')}>{c.home}</a> › <a href={localPath(lang,'/#usluge')}>{c.services}</a> › {t.title}</div>
+  <section class="service-hero">
+    <div class="service-copy">
+      <p class="service-eyebrow">{t.eyebrow}</p>
+      <h1>{t.title}</h1>
+      <p class="intro">{t.intro}</p>
+    </div>
+  </section>
+  <div class="lab-gallery">
+    <figure><img src="/images/rad-protetika.webp" alt={t.alt1} width="1245" height="705" loading="lazy" /><figcaption><span>{c.labTag}</span>{t.cap1}</figcaption></figure>
+    <figure><img src="/images/digitalna-oprema.webp" alt={t.alt2} width="1266" height="1410" loading="lazy" /><figcaption><span>{c.practiceTag}</span>{t.cap2}</figcaption></figure>
+  </div>
+  <article class="service-article">
+    <h2>{t.h2a}</h2>
+    <p>{t.p1}</p>
+    <h2>{t.h2b}</h2>
+    {t.items.map(([k,v])=><p><strong>{k}:</strong> {v}</p>)}
+    <p>{t.p2}</p>
+  </article>
+  <p class="legal-note">{t.note}</p>
+</Inner>
+<style>
+.service-breadcrumb{margin:16px 0 20px;color:#44786c;font-size:14px}.service-breadcrumb a{color:inherit}.service-hero{min-height:260px;display:flex;align-items:center;padding:clamp(28px,5vw,70px);background:radial-gradient(circle at 90% 15%,#cce9df 0,transparent 36%),linear-gradient(125deg,#f6fbf8,#e7f3ed);border-radius:18px;color:#102d43;position:relative;overflow:hidden}.service-copy{max-width:850px;position:relative;z-index:1}.service-eyebrow{font-size:12px;letter-spacing:.16em;font-weight:700;color:#3c9079}.service-hero h1{font-size:clamp(36px,5vw,62px);line-height:1.1;margin:16px 0}.service-hero .intro{font-size:clamp(17px,2vw,22px);line-height:1.6;margin:0}.service-article{max-width:840px;margin:42px auto;font-size:18px;line-height:1.85}.service-article p{margin:0 0 22px}.service-article h2{color:#173b48;margin:32px 0 14px}.legal-note{max-width:840px;margin:20px auto 60px}.lab-gallery{display:grid;grid-template-columns:1.4fr 1fr;gap:16px;margin:24px 0 0}.lab-gallery figure{margin:0;border-radius:16px;overflow:hidden;background:#fff;border:1px solid #d6e8df}.lab-gallery img{display:block;width:100%;height:320px;object-fit:cover}.lab-gallery figcaption{padding:12px 15px 14px;font-size:14px;color:#35585a}.lab-gallery figcaption span{display:block;margin-bottom:3px;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#067a65}@media(max-width:600px){.lab-gallery{grid-template-columns:1fr}.lab-gallery img{height:230px}.service-hero{min-height:230px;padding:28px;display:block}.service-copy{max-width:100%}.service-article{font-size:16px}}
+</style>

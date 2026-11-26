@@ -1,0 +1,17 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import home from '../../data/home.json';
+import homepageHtml from '../../data/home.html?raw';
+import {buildHome} from '../../lib/home.mjs';
+import {OTHER_LANGS} from '../../lib/i18n.mjs';
+import {T} from '../../i18n/pages.mjs';
+import en from '../../i18n/home.en.json';
+import de from '../../i18n/home.de.json';
+import it from '../../i18n/home.it.json';
+import sl from '../../i18n/home.sl.json';
+export function getStaticPaths(){return OTHER_LANGS.map(lang=>({params:{lang}}))}
+const {lang}=Astro.params;
+const dict={en,de,it,sl}[lang];
+const {html}=buildHome({html:homepageHtml,home,lang,dict,branch:globalThis.process?.env?.CF_PAGES_BRANCH||''});
+---
+<Layout title={T[lang].home.seo_title} description={T[lang].home.seo_desc}><div set:html={html}/></Layout>

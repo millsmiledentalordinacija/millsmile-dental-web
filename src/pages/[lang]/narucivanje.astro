@@ -1,0 +1,52 @@
+---
+// Prevedena inačica obrasca za naručivanje. Hrvatski obrazac (src/pages/narucivanje.astro) i
+// funkcija functions/api/narucivanje.js NISU mijenjani: ovaj obrazac šalje ista polja na isti API.
+import Inner from '../../layouts/Inner.astro';
+import {OTHER_LANGS,localPath} from '../../lib/i18n.mjs';
+import {T,SERVICE_OPTIONS} from '../../i18n/pages.mjs';
+export function getStaticPaths(){return OTHER_LANGS.map(lang=>({params:{lang}}))}
+const {lang}=Astro.params;const c=T[lang].common;
+const t=T[lang].booking;
+const times=Array.from({length:21},(_,i)=>{const total=8*60+i*30;return `${String(Math.floor(total/60)).padStart(2,'0')}:${String(total%60).padStart(2,'0')}`});
+---
+<Inner title={t.title} description={t.desc}>
+  <div class="booking-breadcrumb"><a href={localPath(lang,'/')}>{c.home}</a> › {t.crumb}</div>
+  <section class="booking-hero"><p class="eyebrow">MILL&SMILE DENTAL · ZAGREB</p><h1>{t.h1}</h1><p>{t.intro}</p></section>
+  <div class="booking-layout"><form id="booking-form" class="booking-form" data-sending={t.sending} data-ok={t.ok} data-invalid={t.invalid} data-fail={t.fail} data-sunday={t.sunday} data-lang={t.langName}>
+    <div class="field"><label for="ime">{t.name}</label><input id="ime" name="ime" autocomplete="name" maxlength="120" required /></div>
+    <div class="field"><label for="telefon">{t.phone}</label><input id="telefon" name="telefon" type="tel" autocomplete="tel" maxlength="40" required pattern="[-+()0-9 ]{6,40}" /></div>
+    <div class="field"><label for="email">{t.email}</label><input id="email" name="email" type="email" autocomplete="email" maxlength="180" /></div>
+    <div class="field"><label for="usluga">{t.service}</label><select id="usluga" name="usluga"><option value="">{t.servicePick}</option>{SERVICE_OPTIONS.map((v,i)=><option value={v}>{t.options[i]}</option>)}</select></div>
+    <div class="field"><label for="datum">{t.date}</label><input id="datum" name="datum" type="date" required aria-describedby="date-note" /><small id="date-note">{t.dateNote}</small></div>
+    <div class="field"><label for="vrijeme">{t.time}</label><select id="vrijeme" name="vrijeme" required><option value="">{t.timePick}</option>{times.map(v=><option value={v}>{v}</option>)}</select><small>{t.timeNote}</small></div>
+    <div class="field full"><label for="poruka">{t.msg}</label><textarea id="poruka" name="poruka" rows="4" maxlength="540" placeholder={t.msgPh}></textarea></div>
+    <div class="trap" aria-hidden="true"><label for="website">{t.trap}</label><input id="website" name="website" tabindex="-1" autocomplete="off" /></div>
+    <label class="consent full"><input id="privola" type="checkbox" name="privola" required /><span>{t.consent}</span></label>
+    <p class="note full">{t.note}</p>
+    <div class="full"><button id="submit-booking" type="submit" disabled>{t.submit}</button><p id="booking-status" role="status" aria-live="polite"></p></div>
+  </form><aside class="booking-aside"><h2>{t.asideH}</h2><p><a href="tel:+385992411982">+385 99 241 1982</a></p><p><a href="mailto:ordinacija@info-millsmiledental.com">ordinacija@info-millsmiledental.com</a></p><p>Mill&Smile Dental<br />Ilica 253, Zagreb</p><p>{t.asideP}</p></aside></div>
+</Inner>
+<script is:inline>
+(()=>{
+const form=document.getElementById('booking-form'),consent=document.getElementById('privola'),button=document.getElementById('submit-booking'),status=document.getElementById('booking-status'),datum=document.getElementById('datum');
+if(!form||!consent||!button||!status||!datum)return;
+const t=form.dataset;
+const sync=()=>{button.disabled=!consent.checked};
+consent.addEventListener('change',sync);sync();
+datum.min=new Intl.DateTimeFormat('sv-SE',{timeZone:'Europe/Zagreb',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+datum.addEventListener('change',()=>{if(datum.value&&new Date(datum.value+'T12:00:00').getDay()===0){datum.setCustomValidity(t.sunday);datum.reportValidity()}else datum.setCustomValidity('')});
+form.addEventListener('submit',async(e)=>{
+ e.preventDefault();if(!consent.checked||!form.reportValidity())return;
+ button.disabled=true;status.textContent=t.sending;
+ const data=Object.fromEntries(new FormData(form).entries());data.privola=Boolean(data.privola);
+ // Ordinacija vidi na kojem je jeziku upit poslan; ostala polja jednaka su hrvatskom obrascu.
+ data.poruka=('[Jezik upita: '+t.lang+'] '+(data.poruka||'')).trim();
+ try{const response=await fetch('/api/narucivanje',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});let result={};try{result=await response.json()}catch{}
+  if(response.ok&&result.ok){status.textContent=t.ok;form.reset()}else status.textContent=response.status===400?t.invalid:t.fail}
+ catch{status.textContent=t.fail}finally{sync()}
+});
+})();
+</script>
+<style>
+.booking-breadcrumb{margin:16px 0 20px;color:#44786c;font-size:14px}.booking-breadcrumb a{color:inherit}.booking-hero{padding:clamp(28px,5vw,70px);background:radial-gradient(circle at 90% 15%,#cce9df 0,transparent 36%),linear-gradient(125deg,#f6fbf8,#e7f3ed);border-radius:18px;color:#102d43}.eyebrow{font-size:12px;letter-spacing:.16em;font-weight:700;color:#3c9079}.booking-hero h1{font-size:clamp(34px,5vw,60px);line-height:1.12;margin:16px 0}.booking-hero p:last-child{font-size:19px;line-height:1.6;max-width:750px}.booking-layout{display:grid;grid-template-columns:minmax(0,2fr) minmax(230px,1fr);gap:35px;margin:40px 0 65px}.booking-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;background:#f6fbf8;border:1px solid #dbeae4;border-radius:18px;padding:clamp(18px,3vw,32px)}.field{display:flex;flex-direction:column;gap:7px}.field label{font-weight:650;color:#173b48}.field small{font-size:12px;color:#526e70;line-height:1.4}.field input,.field select,.field textarea{width:100%;box-sizing:border-box;border:1px solid #aecbc0;border-radius:9px;background:white;padding:13px;font:inherit;color:#173b48}.field input:focus,.field select:focus,.field textarea:focus{outline:2px solid #4b9b82;outline-offset:2px}.full{grid-column:1/-1}.consent{display:flex;gap:12px;align-items:flex-start;line-height:1.55}.consent input{margin-top:5px;accent-color:#398c78}.note{font-size:14px;color:#526e70;margin:0}.booking-form button{border:0;border-radius:10px;padding:15px 23px;background:#287d68;color:white;font:inherit;font-weight:700;cursor:pointer}.booking-form button:disabled{opacity:.6;cursor:wait}#booking-status{min-height:1.5em;font-weight:600}.booking-aside{padding:22px 0;color:#244653}.booking-aside h2{font-size:23px}.booking-aside a{color:#287d68;overflow-wrap:anywhere}.booking-aside p{line-height:1.65}.trap{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}@media(max-width:750px){.booking-layout{grid-template-columns:1fr}.booking-form{grid-template-columns:1fr}.booking-aside{padding:0 12px}.booking-hero p:last-child{font-size:17px}}
+</style>

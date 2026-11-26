@@ -14,7 +14,7 @@ const topics=[
 const related=topics.filter(t=>t.words.some(w=>text.includes(w)));
 const articleSchema={'@context':'https://schema.org','@type':'BlogPosting',headline:item.data.title,description:item.data.description,datePublished:item.data.date.toISOString(),mainEntityOfPage:'https://info-millsmiledental.com/blog/'+item.id+'/',publisher:{'@id':'https://info-millsmiledental.com/#ordinacija'},...(item.data.image?{image:new URL(item.data.image,'https://info-millsmiledental.com').href}:{})};
 ---
-<Inner title={item.data.title} description={item.data.description}>
+<Inner title={item.data.title} description={item.data.description} alternates={false}>
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)}/>
   <a href="/blog/">Blog</a>
   <h1>{item.data.title}</h1>
